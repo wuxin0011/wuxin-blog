@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>邮件消息</title>
+</head>
+
+<body style="margin: 0; padding: 0;  width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center;border-radius: 4px;">
+<div style="position: relative; width: 550px; height: auto;  min-width: 300px; box-shadow: 1px 1px 1px #aaa, -1px -1px 1px #aaa, 3px 3px 3px #aaa, -3px -3px 3px #aaa; margin: 10px;">
+    <div style="background-image: url(https://cdn.jsdelivr.net/gh/wuxin0011/wuxin@main/blog-resource/img/bg1.jpg);width: 550px;height: 250px;background-size: cover;background-repeat: no-repeat;border-radius: 5px 5px 0px 0px"></div>
+    <div style="font-size: 0.875rem; font-family: 'Century Gothic', 'Trebuchet MS', 'Hiragino Sans GB', 微软雅黑, 'Microsoft Yahei', Tahoma, Helvetica, Arial, 'SimSun', sans-serif;font-weight: 700; margin-top: 30px; margin-left: 10px;">
+        Dear<strong style="color: mediumslateblue;margin:0  1px;" th:text="${commentUsername}">commentUsername</strong>您好！,您的评论有了新的回复
+    </div>
+    
+    <div style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+        <span style="font-size: 14px; border-bottom: 0.8px dashed rgba(100, 100, 0, .9);">评论文章:</span>
+        <span style="font-size: 14px;" th:text="|《${title}》|">
+            《钢铁怎样炼成的》
+        </span>
+    </div>
+    
+    <div style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+        <span style="font-size: 14px; border-bottom: 0.8px dashed rgba(100, 100, 0, .9);">评论时间:</span>
+        <span style="font-size: 14px;" th:text="${date}">
+            2022-1-23 13:23:45
+        </span>
+    </div>
+    
+    <div style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+        <span style="font-size: 14px; border-bottom: 0.8px dashed rgba(100, 100, 0, .9);">您的评论:</span>
+    </div>
+    
+    <div style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+        <p style="padding: 15px; font-size: 14px; background-color: rgba(51,16,16,0.08)" th:text="${commentContent}">
+            人生代代无穷已，江月年年望相似。 不知江月待何人，但见长江送流水。
+        </p>
+    </div>
+    
+    
+    <div style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+				<span style="font-size: 14px; border-bottom: 0.8px dashed rgba(100, 100, 0, .9);"><strong
+                        style="color: mediumslateblue;margin-right: 1px;" th:text="${replyUsername}">nickname</strong>给您的评论:</span>
+    </div>
+    
+    <div style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+        <p style="padding: 15px; font-size: 14px; background-color: rgba(51,16,16,0.08)" th:text="${replyContent}">
+            人生代代无穷已，江月年年望相似。 不知江月待何人，但见长江送流水。
+        </p>
+    </div>
+    
+    <div style="display: flex;justify-content: center">
+        <a th:href="@{${url}}" target="_blank" style="display:block; width:55px; text-decoration: none; cursor: pointer; margin-top: 30px;margin-bottom: 50px; box-shadow: 1px 1px 1px #aaa, 3px 3px 3px #aaa; background-color:  rgba(51,16,16,0.08);color: black;font-size: 12px; padding: 15px;text-align: center;border-radius: 3px;">回复评论</a>
+    </div>
+
+</div>
+
+</body>
+
+</html>

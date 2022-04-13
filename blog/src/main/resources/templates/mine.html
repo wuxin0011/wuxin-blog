@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>邮件消息</title>
+</head>
+
+<body style="margin: 0; padding: 0;  width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; border-radius: 4px;">
+<div class="card" style="position: relative; width: 550px; height: auto;  min-width: 300px; box-shadow: 1px 1px 1px #aaa, -1px -1px 1px #aaa, 3px 3px 3px #aaa, -3px -3px 3px #aaa; margin: 10px;" >
+    <div style="background-image: url(https://cdn.jsdelivr.net/gh/wuxin0011/wuxin@main/blog-resource/img/bg1.jpg);width: 550px;height: 250px;background-size: cover;background-repeat: no-repeat;border-radius: 5px 5px 0px 0px"></div>
+    <div class="header"
+         style="font-size: 0.875rem; font-family: 'Century Gothic', 'Trebuchet MS', 'Hiragino Sans GB', 微软雅黑, 'Microsoft Yahei', Tahoma, Helvetica, Arial, 'SimSun', sans-serif; font-weight: 700; margin-top: 30px; margin-left: 10px;">
+        Dear<strong style="color: deepskyblue;margin:0  1px;">管理员</strong>你好！
+    </div>
+    
+    
+    <div class="item" style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+				<span style="font-size: 14px; border-bottom: 0.8px dashed rgba(100, 100, 0, .9);">
+					<strong style="color: deepskyblue;margin-right: 1px;" th:text="${username}">nickname</strong>
+					在
+					<strong style="color: black;margin-right: 1px;"  th:text="${date}">2022-3-23 13:23:45</strong>
+					评论了你的文章
+					<strong style="color: black;margin-right: 1px;"  th:text="|《${title}》|">《title》</strong>
+				</span>
+    </div>
+    
+    <div class="item" style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+        <span style="font-size: 14px; border-bottom: 0.8px dashed rgba(100, 100, 0, .9);">给你的评论:</span>
+    </div>
+    
+    <div class="item" style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+        <p style="padding: 10px; font-size: 14px; background-color: rgba(51,16,16,0.08)" th:text="${content}">海上生明月，天涯共此时。</p>
+    </div>
+    
+    <div class="item" style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+        <span style="font-size: 14px; border-bottom: 0.8px dashed rgba(100, 100, 0, .9);">其他信息:</span>
+    </div>
+    
+    <div class="item" style="margin: 20px 10px; line-height: 22px; letter-spacing: 1px;">
+        <p style="padding: 10px; font-size: 14px; background-color: rgba(51,16,16,0.08)">
+            ip来源:<span style="border-bottom: 0.8px solid rgba(100, 100, 0, .9);" th:text="${ip}"> 192.168.233.134</span>
+            地址:<span style="border-bottom: 0.8px solid rgba(100, 100, 0, .9);" th:text="${address}">localhost</span>
+            系统:<span style="border-bottom: 0.8px solid rgba(100, 100, 0, .9);" th:text="${os}">win10</span>
+        </p>
+    </div>
+    
+    <div style="display: flex;justify-content: center">
+        <a th:href="@{${adminUrl}}" target="_blank" style="display:block; width:55px; margin-right: 10px; text-decoration: none; cursor: pointer; margin-top: 30px;margin-bottom: 50px; box-shadow: 1px 1px 1px #aaa, 3px 3px 3px #aaa; background-color:  rgba(0, 0, 0, .1);color: black;font-size: 12px; padding: 15px;text-align: center;border-radius: 3px;">管理评论</a>
+        <a th:href="@{${url}}" target="_blank" style="display:block; width:55px; text-decoration: none; cursor: pointer; margin-top: 30px;margin-bottom: 50px; box-shadow: 1px 1px 1px #aaa, 3px 3px 3px #aaa; background-color:  rgba(0, 0, 0, .1);color: black;font-size: 12px; padding: 15px;text-align: center;border-radius: 3px;">回复评论</a>
+    </div>
+
+</div>
+
+</body>
+
+</html>
