@@ -1,9 +1,8 @@
 package com.wuxin.blog.redis;
 
-import cn.hutool.json.JSONObject;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.exception.CustomException;
 import com.wuxin.blog.mapper.BlogMapper;
 import com.wuxin.blog.mapper.CategoryMapper;
@@ -14,16 +13,12 @@ import com.wuxin.blog.pojo.Blog;
 import com.wuxin.blog.pojo.Category;
 import com.wuxin.blog.pojo.Tag;
 import com.wuxin.blog.pojo.User;
-import com.wuxin.blog.utils.JacksonUtils;
 import com.wuxin.blog.utils.JsonFormatUtils;
 import com.wuxin.blog.utils.mapper.MapperUtils;
 import com.wuxin.blog.utils.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,6 +51,7 @@ public class CacheService {
     private static final String CATEGORY_LIST = RedisKey.CATEGORY_LIST;
     private static final String BLOG_LIST = RedisKey.BLOG_LIST;
     private static final String ALL_BLOG_LIST = RedisKey.ALL_BLOG_LIST;
+
 
 
     public List<Tag> getTagList() {
@@ -253,7 +249,6 @@ public class CacheService {
                 return userComment;
             }
         }
-
         // 用户不存在！
         User user = userMapper.selectById(userId);
         if (user == null) {
@@ -330,6 +325,8 @@ public class CacheService {
         return null;
 
     }
+
+
 
 
     /*=====================================================================================*/

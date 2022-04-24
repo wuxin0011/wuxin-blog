@@ -1,7 +1,7 @@
 package com.wuxin.blog.controller.admin;
 
 import com.wuxin.blog.annotation.AccessLimit;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.*;
 import com.wuxin.blog.task.ScheduleTask;

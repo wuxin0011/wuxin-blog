@@ -2,39 +2,60 @@
 
 :root {
     --active-file-border-color: var(--drake-accent);
-    --drake-accent: #e95f59;
-    --drake-highlight: #d63200;
+    --drake-accent: #21ba45;
+    --drake-highlight: #21ba45;
 }
+
+/* 清除代理样式 */
+.typo p {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .typo {
-    width: 100%;
-    text-align: justify;
-    word-wrap: break-word;
+    width: 100% !important;
+    text-align: justify !important;
+    word-wrap: break-word !important;
 }
 
 .typo img {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
+    display: block !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
 }
 
 .typo p {
-    font-size: 15px;
-    line-height: 1.8;
-    text-align: justify;
+    font-size: 15px !important;
+    line-height: 1.8 !important;
+    text-align: justify !important;
 }
 
 /* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
-.typo article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+.typo article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
     display: block;
 }
 
 /* HTML5 媒体文件跟 img 保持一致 */
-.typo audio, canvas, video {
+.typo audio,
+canvas,
+video {
     display: block;
 }
 
 /* 要注意表单元素并不继承父级 font 的问题 */
-.typo button, input, select, textarea {
+.typo button,
+input,
+select,
+textarea {
     font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
 }
 
@@ -51,13 +72,14 @@
 }
 
 /* 去除默认边框 */
-.typo fieldset, img {
+.typo fieldset,
+img {
     border: 0;
 }
 
 
 
-.typo blockquote p{
+.typo blockquote p {
     font-size: 16px;
 }
 
@@ -75,7 +97,7 @@
     color: #304455;
     border-radius: 2px;
     padding: 10px 10px;
-    background-color: #fdefee;
+    background-color: rgba(0, 0, 0, 0.05);
     position: relative;
     border-left: none;
 }
@@ -95,7 +117,8 @@ blockquote:before {
 
 
 /* Firefox 以外，元素没有下划线，需添加 */
-.typo acronym, abbr {
+.typo acronym,
+abbr {
     border-bottom: 1px dotted;
     font-variant: normal;
 }
@@ -110,34 +133,47 @@ blockquote:before {
     text-decoration: line-through;
 }
 
-.typo address, caption, cite, code, dfn, em, th, var {
+.typo address,
+caption,
+cite,
+code,
+dfn,
+em,
+th,
+var {
     font-style: normal;
     font-weight: 400;
 }
 
 /* 去掉列表前的标识, li 会继承，大部分网站通常用列表来很多内容，所以应该当去 */
-.typo ul, ol {
+.typo ul,
+ol {
     list-style: none;
 }
 
 /* 对齐是排版最重要的因素, 别让什么都居中 */
-.typo caption, th {
+.typo caption,
+th {
     text-align: left;
 }
 
-.typo q:before, .typo q:after {
+.typo q:before,
+.typo q:after {
     content: '';
 }
 
 /* 统一上标和下标 */
-.typo sub, .typo sup {
+.typo sub,
+.typo sup {
     font-size: 75%;
     line-height: 0;
     position: relative;
 }
 
-.typo :root sub, .typo :root sup {
-    vertical-align: baseline; /* for ie9 and other modern browsers */
+.typo :root sub,
+.typo :root sup {
+    vertical-align: baseline;
+    /* for ie9 and other modern browsers */
 }
 
 .typo sup {
@@ -185,7 +221,8 @@ blockquote:before {
 }
 
 /* 默认不显示下划线，保持页面简洁 */
-.typo ins, .typo a {
+.typo ins,
+.typo a {
     text-decoration: none;
 }
 
@@ -203,14 +240,16 @@ blockquote:before {
 }
 
 /* 代码片断 */
-.typo p code, .typo ul code {
-    margin-left: 5px;
-    margin-right: 5px;
-    border: 1px solid #ddd;
-    color: #e4305e;
-    background: #fdf2f5;
-    border-radius: 3px;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+.typo p code,
+.typo ul code {
+    margin: 0 5px;
+    padding: 4px;
+    color: #fff;
+    background: #008019;
+    border-radius: 5px;
+    /* element-ui */
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+
 }
 
 /* 一致化 horizontal rule */
@@ -223,13 +262,14 @@ blockquote:before {
 
 /* 底部印刷体、版本等标记 */
 .typo small,
-    /* 图片说明 */
+/* 图片说明 */
 .typo figcaption {
     font-size: 0.9em;
     color: #888;
 }
 
-.typo strong, .typo b {
+.typo strong,
+.typo b {
     font-weight: bold;
 }
 
@@ -238,7 +278,8 @@ blockquote:before {
     cursor: move;
 }
 
-.typo .clearfix:before, .typo .clearfix:after {
+.typo .clearfix:before,
+.typo .clearfix:after {
     content: "";
     display: table;
 }
@@ -252,7 +293,9 @@ blockquote:before {
 }
 
 /* 强制文本换行 */
-.typo .textwrap, .typo .textwrap td, .typo .textwrap th {
+.typo .textwrap,
+.typo .textwrap td,
+.typo .textwrap th {
     word-wrap: break-word;
     word-break: break-all;
 }
@@ -267,12 +310,24 @@ blockquote:before {
 }
 
 /* 保证块/段落之间的空白隔行 */
-.typo p, .typo pre, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table {
+.typo p,
+.typo pre,
+.typo ul,
+.typo ol,
+.typo dl,
+.typo form,
+.typo hr,
+.typo table {
     margin-bottom: 1.2em
 }
 
 /* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */
-.typo h1, .typo h2, .typo h3, .typo h4, .typo h5, .typo h6 {
+.typo h1,
+.typo h2,
+.typo h3,
+.typo h4,
+.typo h5,
+.typo h6 {
     /*color: #000;*/
     margin-top: 1.2em;
     margin-bottom: 0.6em;
@@ -280,7 +335,9 @@ blockquote:before {
     line-height: 1.25;
 }
 
-.typo h1, .typo h2, .typo h3 {
+.typo h1,
+.typo h2,
+.typo h3 {
     padding-bottom: .3em;
     border-bottom: 1px solid #eaecef;
 }
@@ -325,7 +382,8 @@ blockquote:before {
     padding-left: 1.5em;
 }
 
-.typo li ul, .typo li ol {
+.typo li ul,
+.typo li ol {
     margin-bottom: 0.8em;
     margin-left: 2em;
 }
@@ -335,7 +393,9 @@ blockquote:before {
 }
 
 /* 同 ul/ol，在文章中应用 table 基本格式 */
-.typo table th, .typo table td, .typo table caption {
+.typo table th,
+.typo table td,
+.typo table caption {
     border: 1px solid #ddd;
     padding: 0.5em 1em;
     color: #666;
@@ -353,7 +413,9 @@ blockquote:before {
     border-bottom: none;
 }
 
-.typo em, legend, caption {
+.typo em,
+legend,
+caption {
     color: #000;
     font-weight: inherit;
 }

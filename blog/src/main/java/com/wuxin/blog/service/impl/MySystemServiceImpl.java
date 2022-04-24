@@ -1,6 +1,5 @@
 package com.wuxin.blog.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.wuxin.blog.exception.CustomException;
 import com.wuxin.blog.mapper.GithubSettingMapper;
@@ -9,7 +8,7 @@ import com.wuxin.blog.mapper.WebFooterLabelMapper;
 import com.wuxin.blog.pojo.GithubSetting;
 import com.wuxin.blog.pojo.MySystem;
 import com.wuxin.blog.pojo.WebFooterLabel;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.MySystemService;
 import com.wuxin.blog.utils.JsonFormatUtils;

@@ -1,5 +1,7 @@
 import axios from 'axios'
-import {Message} from "element-ui";
+import {
+    Message
+} from "element-ui";
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 const instance = axios.create({

@@ -1,5 +1,7 @@
 package com.wuxin.blog.annotation;
 
+import com.wuxin.blog.enums.VisitBehavior;
+
 import java.lang.annotation.*;
 
 /**
@@ -22,4 +24,10 @@ public @interface VisitLogger {
      * 访问网页标题
      */
     String name() default "";
+
+
+    /**
+     * 访问行为枚举
+     */
+    VisitBehavior action() default VisitBehavior.UNKNOWN;
 }

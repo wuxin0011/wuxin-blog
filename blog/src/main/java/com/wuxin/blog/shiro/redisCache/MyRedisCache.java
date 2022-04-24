@@ -1,7 +1,7 @@
 package com.wuxin.blog.shiro.redisCache;
 
 import com.wuxin.blog.pojo.User;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;

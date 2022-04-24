@@ -3,27 +3,21 @@ package com.wuxin.blog.service.impl;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.wuxin.blog.constant.Constants;
 import com.wuxin.blog.mapper.BlogMapper;
-import com.wuxin.blog.mapper.CommentMapper;
 import com.wuxin.blog.pojo.Blog;
-import com.wuxin.blog.pojo.Comment;
 import com.wuxin.blog.pojo.CommentReply;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.MailService;
 import com.wuxin.blog.utils.KeyUtil;
-import com.wuxin.blog.utils.http.HttpUtils;
 import com.wuxin.blog.utils.ip.AddressUtils;
 import com.wuxin.blog.utils.ip.IpUtils;
-import com.wuxin.blog.utils.mapper.MapperUtils;
 import com.wuxin.blog.utils.servlet.ServletUtils;
-import com.wuxin.blog.utils.string.StringUtils;
 import com.wuxin.blog.utils.time.DateUtils;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -33,7 +27,6 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.mail.internet.MimeMessage;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,10 +63,6 @@ public class MailServiceImpl implements MailService {
 
     @Value("${spring.mail.username}")
     private String from;
-
-
-    @Autowired
-    private CommentMapper commentMapper;
 
 
     @Autowired
@@ -126,7 +115,7 @@ public class MailServiceImpl implements MailService {
         String header = request.getHeader("User-Agent");
         UserAgent userAgent = UserAgent.parseUserAgentString(header);
         String os = userAgent.getOperatingSystem().toString().toLowerCase();
-        logger.info("ip:{},address:{},os:{}", ip, address, os);
+        // logger.info("评论用户信息 ip:{},address:{},os:{}", ip, address, os);
 
         Map<String, Object> map = new HashMap<>(Constants.HASH_MAP_INIT);
         map.put("date", date);
@@ -198,7 +187,7 @@ public class MailServiceImpl implements MailService {
             logger.info("邮件发送成功！");
         } catch (MailException e) {
             e.printStackTrace();
-            logger.error("邮箱发送失败！:{}", e.getStackTrace());
+            logger.error("邮箱发送失败！ 错误信息:{}", e.getMessage());
         }
 
     }
@@ -221,10 +210,10 @@ public class MailServiceImpl implements MailService {
             messageHelper.setText(text, true);
             // 邮件发送
             mailSender.send(mimeMessage);
-            logger.info("邮件发送成功！");
+            logger.info("==============邮件发送成功！==============");
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("邮件发送失败！:{}", e.getMessage());
+            logger.error("邮箱发送失败！ 错误信息:{}", e.getMessage());
         }
     }
 

@@ -22,7 +22,7 @@ public enum VisitBehavior {
     CLICK_FRIEND("点击友链", ""),
     LIKE_MOMENT("点赞动态", ""),
     CHECK_PASSWORD("校验博客密码", ""),
-            ;
+    ;
 
     /**
      * 访问行为

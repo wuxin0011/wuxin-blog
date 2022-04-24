@@ -21,7 +21,6 @@ import java.io.IOException;
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     /**
-     * @param request
      */
     public XssHttpServletRequestWrapper(HttpServletRequest request)
     {

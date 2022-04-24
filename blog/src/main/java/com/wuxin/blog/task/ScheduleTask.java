@@ -1,9 +1,13 @@
 package com.wuxin.blog.task;
 
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.pojo.Visitor;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.AccessLogService;
 import com.wuxin.blog.service.LoginLogService;
+import com.wuxin.blog.service.VisitorService;
+import com.wuxin.blog.utils.JsonFormatUtils;
+import com.wuxin.blog.utils.string.StringUtils;
 import com.wuxin.blog.utils.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +44,9 @@ public class ScheduleTask {
     private AccessLogService accessLogService;
 
     @Autowired
+    private VisitorService visitorService;
+
+    @Autowired
     private LoginLogService loginLogService;
 
 
@@ -49,7 +56,14 @@ public class ScheduleTask {
     public void saveCountTask() {
         Map<String, Object> map = new HashMap<>();
         map.put("date", DateUtils.simpleDate());
-        map.put("access", accessLogService.selectTodayAccessLog());
+        List<Visitor> visitors;
+        boolean hasKey = redisService.hasKey(RedisKey.VISITOR_IDENTIFICATION);
+        if (hasKey) {
+            visitors = JsonFormatUtils.objectToArr(redisService.get(RedisKey.VISITOR_IDENTIFICATION), Visitor.class);
+        } else {
+            visitors = new ArrayList<>();
+        }
+        map.put("access", visitors.size());
         map.put("login", loginLogService.selectTodayLoginLog());
         logger.info("今日访问量统计中 visit:{}", map);
         final List<Map<String, Object>> list = getAccessLoginCount();
@@ -82,8 +96,19 @@ public class ScheduleTask {
     /**
      * 缓存中用户记录同步到数据库
      */
-    private void cacheSaveDatabase(){
-
+    public void saveCacheVisitor() {
+        boolean hasKey = redisService.hasKey(RedisKey.VISITOR_IDENTIFICATION);
+        if (hasKey) {
+            List<Visitor> list = JsonFormatUtils.objectToArr(redisService.get(RedisKey.VISITOR_IDENTIFICATION), Visitor.class);
+            for (Visitor visitor : list) {
+                try {
+                    visitorService.saveOrUpdate(visitor);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    logger.error("visitor log 保存失败！e:{}", e.getMessage());
+                }
+            }
+        }
     }
 
 

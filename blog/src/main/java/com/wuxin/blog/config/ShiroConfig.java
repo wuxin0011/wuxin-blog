@@ -36,26 +36,6 @@ import java.util.Map;
 public class ShiroConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
-
-    // @Value("${spring.shiro.redis.host}")
-    // private String host;
-    //
-    // @Value("${spring.shiro.redis.port}")
-    // private Integer port;
-    //
-    // @Value("${spring.shiro.redis.database}")
-    // private Integer database;
-    //
-    // @Value("${spring.shiro.redis.password}")
-    // private String password;
-    //
-    // @Value("${spring.shiro.redis.timeout}")
-    // private Integer timeout;
-    //
-    // @Value("${spring.shiro.redis.expire}")
-    // private Integer expire;
-
-
     /**
      * anon 无需认证就可以访问
      * authc 需要认证才可以访问
@@ -106,7 +86,7 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 注册自定义realm
         securityManager.setRealm(userRealm);
-        // 用户登录密码校验使用自定义密码校验规则
+        // 使用自定义校验规则
         userRealm.setCredentialsMatcher(myCredentialsMatcher());
         return securityManager;
 
@@ -114,8 +94,6 @@ public class ShiroConfig {
 
     /**
      * 自定义登录验证规则
-     *
-     * @return
      */
     @Bean
     public MyCredentialsMatcher myCredentialsMatcher() {

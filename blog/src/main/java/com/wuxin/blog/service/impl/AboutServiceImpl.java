@@ -1,9 +1,8 @@
 package com.wuxin.blog.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.wuxin.blog.mapper.AboutMapper;
 import com.wuxin.blog.pojo.About;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.AboutService;
 import com.wuxin.blog.utils.JsonFormatUtils;

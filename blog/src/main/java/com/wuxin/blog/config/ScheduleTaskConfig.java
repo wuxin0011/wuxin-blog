@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import java.time.LocalDateTime;
-
 /**
  * @Author: wuxin001
  * @Date: 2022/02/13/11:44
@@ -27,11 +25,20 @@ public class ScheduleTaskConfig {
 
 
     /**
-     * 定时任务每天晚上11点钟执行
+     * 定时任务每天23:00点钟执行
      */
     @Scheduled(cron = "0 0 23 * * ? ")
     private void saveAccessLogin() {
         logger.info("----------------当天访问量和浏览量统计中--------------");
         scheduleTask.saveCountTask();
+    }
+
+    /**
+     * 定时任务每3天23:50点钟执行
+     */
+    @Scheduled(cron = "0 50 23 */3 * ? ")
+    private void saveCacheVisitor() {
+        logger.info("----------------当天访问日志统计中--------------");
+        scheduleTask.saveCacheVisitor();
     }
 }

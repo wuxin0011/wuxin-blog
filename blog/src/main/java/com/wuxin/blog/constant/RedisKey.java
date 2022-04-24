@@ -1,4 +1,4 @@
-package com.wuxin.blog.redis;
+package com.wuxin.blog.constant;
 
 import com.wuxin.blog.utils.security.ShiroUtil;
 import com.wuxin.blog.utils.servlet.ServletUtils;
@@ -23,6 +23,11 @@ public class RedisKey {
      * 文章列表
      */
     public static final String ALL_BLOG_LIST = "all_blog_list";
+
+    /**
+     * 文章列表
+     */
+    public static final String USER_COMMENT_LIST = "usercomment_list";
 
     /**
      * 文章评论
@@ -153,7 +158,7 @@ public class RedisKey {
     public static final String ARCHIVE_LIST = "archive_list";
 
 
-    public static final Long EXPIRE = 60*60*3L;
+    public static final Long EXPIRE = 60 * 60 * 3L;
 
 
     public static final String ACCESS_LOGIN_COUNT = "access_login_count";
@@ -164,12 +169,15 @@ public class RedisKey {
     public static final String SYSTEM_COUNT = "system:count";
 
 
+    /**
+     * 访客身份标识
+     */
+    public static final String VISITOR_IDENTIFICATION = "visitor_identification";
+
+
     public static String getKey(Object id) {
-        return  id + "_id";
+        return id + "_id";
     }
-
-
-
 
 
     public static String getKey(Object id, String keyName) {
@@ -188,32 +196,32 @@ public class RedisKey {
         return keyName + "_" + type + "_" + current + "_" + blogId;
     }
 
-    public static String getKey(Long blogId, String keyName, Integer current,Integer limit, Integer type) {
+    public static String getKey(Long blogId, String keyName, Integer current, Integer limit, Integer type) {
         if (StringUtils.isEmpty(keyName)) {
             keyName = "default:name";
         }
         if (blogId == null || blogId == 0) {
-            return keyName + "_" + type + "_" + current + "_"+ limit;
+            return keyName + "_" + type + "_" + current + "_" + limit;
         }
-        return keyName + "_" + type + "_" + current + "_" + limit+ "_" + blogId;
+        return keyName + "_" + type + "_" + current + "_" + limit + "_" + blogId;
     }
 
 
-    public static String getKey( String keyName, Integer current, Integer limit) {
+    public static String getKey(String keyName, Integer current, Integer limit) {
         if (StringUtils.isEmpty(keyName)) {
             keyName = "default:name";
         }
-        return keyName + "_"  + "_" + current + "_" + limit;
+        return keyName + "_" + "_" + current + "_" + limit;
     }
 
-    public static String getKey( String keyName, Integer current, Integer limit,String keywords) {
+    public static String getKey(String keyName, Integer current, Integer limit, String keywords) {
         if (StringUtils.isEmpty(keyName)) {
             keyName = "default:name";
         }
         if (StringUtils.isEmpty(keywords)) {
             keywords = "default:keywords";
         }
-        return keyName + "_"  + "_" + current + "_" + limit + "_" + keywords;
+        return keyName + "_" + "_" + current + "_" + limit + "_" + keywords;
     }
 
 }

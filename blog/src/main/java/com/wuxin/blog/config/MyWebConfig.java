@@ -1,6 +1,5 @@
 package com.wuxin.blog.config;
 
-import com.wuxin.blog.interceptor.AccessLimitInterceptor;
 import com.wuxin.blog.interceptor.TokenInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.server.ErrorPage;
@@ -20,10 +19,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class MyWebConfig implements WebMvcConfigurer, ErrorPageRegistrar {
-
-
-    @Autowired
-    private AccessLimitInterceptor accessLimitInterceptor;
 
     @Autowired
     private TokenInterceptor tokenInterceptor;
@@ -54,7 +49,6 @@ public class MyWebConfig implements WebMvcConfigurer, ErrorPageRegistrar {
 
     /**
      * 注册错误页面
-     * @param registry
      */
     @Override
     public void registerErrorPages(ErrorPageRegistry registry) {

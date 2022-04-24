@@ -1,6 +1,5 @@
 package com.wuxin.blog.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
@@ -10,13 +9,13 @@ import com.wuxin.blog.exception.CustomException;
 import com.wuxin.blog.mapper.ChatUrlMapper;
 import com.wuxin.blog.mapper.UserMapper;
 import com.wuxin.blog.mode.PageVo;
-import com.wuxin.blog.mode.UserComment;
 import com.wuxin.blog.mode.UserPass;
 import com.wuxin.blog.pojo.ChatUrl;
 import com.wuxin.blog.pojo.User;
 import com.wuxin.blog.redis.CacheService;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
+import com.wuxin.blog.redis.impl.CommentUserCacheService;
 import com.wuxin.blog.service.UserService;
 import com.wuxin.blog.utils.KeyUtil;
 import com.wuxin.blog.utils.ThrowUtils;
@@ -27,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,7 +48,7 @@ public class UserServiceImpl implements UserService {
     private RedisService redisService;
 
     @Autowired
-    private CacheService cacheService;
+    private CommentUserCacheService cacheService;
 
     @Override
     public Long addUser(User user) {
@@ -59,7 +57,7 @@ public class UserServiceImpl implements UserService {
         // 默认不禁用
         user.setStatus(true);
         //默认昵称为用户名
-        if(StringUtils.isEmpty(user.getNickname())){
+        if (StringUtils.isEmpty(user.getNickname())) {
             // 如果用户昵称为null默认用户重新赋值用户昵称为 username
             user.setNickname(user.getUsername());
         }
@@ -252,17 +250,10 @@ public class UserServiceImpl implements UserService {
             userId = addUser(newUser);
         } else {
             // 用户名和邮箱是否输入正确 从缓存中获取
-            UserComment userComment = cacheService.cacheCheckUser(username, email, subscription);
-            if (StringUtils.isNotNull(userComment)) {
-                return userComment.getUserId();
-            }
-            // 缓存中没有从数据库中获取
             User userAnd = checkUsernameAndEmail(username, email);
-            if (StringUtils.isNotNull(userAnd)) {
-                // 将用户信息添加到缓存中
-                UserComment instance = UserComment.getInstance(userId, username, email, userAnd.getAvatar(), subscription);
-                redisService.hset(RedisKey.USER_COMMENT_SUB, RedisKey.getKey(userAnd.getUserId(), RedisKey.USER_COMMENT_SUB), instance, 604800L);
-                redisService.hset(RedisKey.USER_COMMENT_SUB, RedisKey.getKey(userAnd.getNickname(), RedisKey.USER_COMMENT_SUB), instance, 604800L);
+            if (userAnd != null) {
+                // 添加到缓存
+                cacheService.addCacheUserComment(userAnd);
                 userId = userAnd.getUserId();
             }
         }

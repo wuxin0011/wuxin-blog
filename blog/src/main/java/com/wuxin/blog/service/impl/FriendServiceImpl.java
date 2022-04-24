@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wuxin.blog.mapper.FriendMapper;
 import com.wuxin.blog.pojo.Friend;
 import com.wuxin.blog.pojo.FriendMessage;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.FriendService;
 import com.wuxin.blog.utils.JsonFormatUtils;

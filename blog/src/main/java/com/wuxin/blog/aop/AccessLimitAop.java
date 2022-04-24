@@ -2,7 +2,6 @@ package com.wuxin.blog.aop;
 
 import com.wuxin.blog.annotation.AccessLimit;
 import com.wuxin.blog.exception.ServiceException;
-import com.wuxin.blog.interceptor.AccessLimitInterceptor;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.utils.ip.IpUtils;
 import com.wuxin.blog.utils.string.StringUtils;
@@ -23,6 +22,7 @@ import java.lang.reflect.Method;
 
 /**
  * 限流访问实现
+ *
  * @Author: wuxin001
  * @Date: 2022/01/23/10:43
  * @Description: 限流注解实现
@@ -31,7 +31,7 @@ import java.lang.reflect.Method;
 @Component
 public class AccessLimitAop {
 
-    private final static Logger logger = LoggerFactory.getLogger(AccessLimitInterceptor.class);
+    private final static Logger logger = LoggerFactory.getLogger(AccessLimitAop.class);
 
     @Autowired
     private RedisService redisService;
@@ -69,4 +69,7 @@ public class AccessLimitAop {
         }
 
     }
+
+
+
 }

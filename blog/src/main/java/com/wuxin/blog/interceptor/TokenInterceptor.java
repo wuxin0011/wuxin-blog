@@ -35,7 +35,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        if("dev".equals(env)){
+        if ("dev".equals(env)) {
             return true;
         }
 
@@ -45,31 +45,24 @@ public class TokenInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if("OPTIONS".equals(request.getMethod())){
+        if ("OPTIONS".equals(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
             return true;
 
         }
 
-
-
         response.setCharacterEncoding(Constants.UTF8);
         String token = request.getHeader(Constants.AUTHENTICATION);
         // request.getHeaders()
-        log.info("jwt interception request:{},token:{}", JSONUtil.toJsonStr(request),token);
+        log.info("jwt interception request:{},token:{}", JSONUtil.toJsonStr(request), token);
         //jwt校验
         try {
             JWTUtils.validToken(token);
             return true;
-        } catch (JWTCreationException e) {
-            throw new JWTCreationException("签名错误！", e);
         } catch (TokenExpiredException e) {
             throw new TokenExpiredException("令牌已过期");
-        } catch (AlgorithmMismatchException e) {
-            throw new AlgorithmMismatchException("签名算法错误");
-
         } catch (Exception e) {
-            throw new JWTCreationException("认证失败", e);
+            throw new JWTCreationException("认证失败！请重新登录！", e);
         }
     }
 }

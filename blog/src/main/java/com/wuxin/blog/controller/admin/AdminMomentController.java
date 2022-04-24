@@ -28,7 +28,7 @@ public class AdminMomentController {
     @Resource
     private MomentService momentService;
 
-    @AccessLimit(msg = "发布失败！操作频繁，请稍后再试！",limitCount = 5)
+    @AccessLimit(msg = "发布失败！操作频繁，请稍后再试！", limitCount = 5)
     @OperationLogger("发布一条动态")
     @RequiresRoles(value = {"user", "root", "admin"}, logical = Logical.OR)
     @PostMapping("/add")
@@ -44,6 +44,7 @@ public class AdminMomentController {
     @PostMapping("/update")
     public Result updateMoment(@RequestBody Moment moment) {
         User loginUser = MySecurityUtils.getUser();
+        log.info("moment loginUser:{}", loginUser);
         // 判断用户是否为root用户，非root用户只能修改自己信息
         if (MySecurityUtils.isNotPermission(loginUser.getRoleId(), loginUser.getUserId(), moment.getUserId())) {
             return Result.error("没有权限执行该操作");
@@ -55,7 +56,7 @@ public class AdminMomentController {
     @OperationLogger("删除动态")
     @RequiresRoles(value = {"user", "root", "admin"}, logical = Logical.OR)
     @GetMapping("/del")
-    public Result delMoment(@RequestParam("momentId") Long momentId,@RequestParam("userId") Long userId) {
+    public Result delMoment(@RequestParam("momentId") Long momentId, @RequestParam(value = "userId", required = false) Long userId) {
         User loginUser = MySecurityUtils.getUser();
         // 判断用户是否为root用户，非root用户只能修改自己信息
         if (MySecurityUtils.isNotPermission(loginUser.getRoleId(), loginUser.getUserId(), userId)) {
@@ -79,13 +80,13 @@ public class AdminMomentController {
     @PostMapping("/list")
     public Result findMoment(@RequestBody PageVo pageVo) {
         return Result.ok(momentService.selectListByPage
-                        (
-                                pageVo.getCurrent(),
-                                pageVo.getLimit(),
-                                pageVo.getKeywords(),
-                                pageVo.getStart(),
-                                pageVo.getEnd()
-                        )
+                (
+                        pageVo.getCurrent(),
+                        pageVo.getLimit(),
+                        pageVo.getKeywords(),
+                        pageVo.getStart(),
+                        pageVo.getEnd()
+                )
         );
     }
 

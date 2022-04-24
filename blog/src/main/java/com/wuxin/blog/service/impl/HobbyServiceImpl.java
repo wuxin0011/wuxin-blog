@@ -2,17 +2,13 @@ package com.wuxin.blog.service.impl;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.wuxin.blog.mapper.HobbyMapper;
-import com.wuxin.blog.mapper.UserMapper;
 import com.wuxin.blog.pojo.Hobby;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.HobbyService;
 import com.wuxin.blog.utils.ThrowUtils;
-import com.wuxin.blog.utils.mapper.MapperUtils;
-import com.wuxin.blog.utils.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

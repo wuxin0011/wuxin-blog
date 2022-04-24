@@ -3,7 +3,7 @@ package com.wuxin.blog.controller.front;
 
 import com.wuxin.blog.constant.GlobalConstant;
 import com.wuxin.blog.mode.Blogger;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.ChatUrlService;
 import com.wuxin.blog.service.HobbyService;

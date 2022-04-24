@@ -14,7 +14,7 @@ import com.wuxin.blog.pojo.Comment;
 import com.wuxin.blog.pojo.CommentReply;
 import com.wuxin.blog.pojo.User;
 import com.wuxin.blog.redis.CacheService;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.CommentService;
 import com.wuxin.blog.utils.ThrowUtils;
@@ -358,6 +358,7 @@ public class CommentServiceImpl implements CommentService {
         cacheService.cacheCommentSub(nickname, email, subscription);
     }
 
+
     /**
      * 从缓存中获取用户信息
      *
@@ -381,7 +382,6 @@ public class CommentServiceImpl implements CommentService {
         //     redisService.hdel(COMMENT_LIST, hk);
         // }
     }
-
 
 
 }

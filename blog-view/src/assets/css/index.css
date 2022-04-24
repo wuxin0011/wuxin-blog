@@ -343,10 +343,10 @@ footer {
     align-items: center;
 } */
 
-.m-position-fixed{
+.m-position-fixed {
     position: fixed;
 }
 
-.m-position-absolute{
+.m-position-absolute {
     position: absolute;
 }

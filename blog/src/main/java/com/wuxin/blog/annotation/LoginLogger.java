@@ -1,7 +1,5 @@
 package com.wuxin.blog.annotation;
 
-import com.wuxin.blog.enums.BusinessType;
-
 import java.lang.annotation.*;
 
 /**
@@ -18,6 +16,4 @@ public @interface LoginLogger {
      * 操作描述
      */
     String value() default "登录";
-
-
 }

@@ -40,7 +40,7 @@ spring:
     protocol: smtp
     host: smtp.qq.com
     username: 2191377759@qq.com
-    password: huxlzhjulymwdjhe
+    password: vtqtxrtosmwudjhf
     default-encoding: UTF-8
   #  文件大小配置
   servlet:

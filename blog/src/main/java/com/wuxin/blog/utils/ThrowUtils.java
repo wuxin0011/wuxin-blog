@@ -1,7 +1,6 @@
 package com.wuxin.blog.utils;
 
 import com.wuxin.blog.exception.CustomException;
-import com.wuxin.blog.exception.NotFoundException;
 import com.wuxin.blog.pojo.User;
 import com.wuxin.blog.utils.string.StringUtils;
 
@@ -12,12 +11,13 @@ import com.wuxin.blog.utils.string.StringUtils;
  */
 public class ThrowUtils {
 
-    public static final CustomException CUSTOM_EXCEPTION = new CustomException("开小差去了哦~");
-    public static final NotFoundException NOT_FOUND = new NotFoundException("内容不存在！");
+    public static final CustomException CUSTOM_EXCEPTION = new CustomException(500, "服务器开小差去了哦~");
+
+    public static final CustomException NOT_FOUND = new CustomException("获取不到内容");
 
     public static void isNull(Object o, String message) {
         if (StringUtils.isNull(o)) {
-            throw new NotFoundException(message);
+            throw NOT_FOUND;
         }
     }
 
@@ -29,10 +29,10 @@ public class ThrowUtils {
 
     public static void userNull(User user) {
         if (StringUtils.isNull(user)) {
-            throw new NotFoundException("用户不存在");
+            throw new CustomException("不用户存在！");
         }
         if (StringUtils.isNull(user.getNickname())) {
-            throw new NotFoundException("用户名不存在!");
+            throw new CustomException("获取昵称获取失败！");
         }
     }
 

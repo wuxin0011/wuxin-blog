@@ -2,7 +2,6 @@ package com.wuxin.blog.aop;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wuxin.blog.annotation.LoginLogger;
 import com.wuxin.blog.mode.Log;
 import com.wuxin.blog.mode.LoginBody;
@@ -11,25 +10,18 @@ import com.wuxin.blog.pojo.Visitor;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.LoginLogService;
 import com.wuxin.blog.service.VisitorService;
-import com.wuxin.blog.utils.ip.AddressUtils;
-import com.wuxin.blog.utils.ip.IpUtils;
+import com.wuxin.blog.utils.JsonFormatUtils;
 import com.wuxin.blog.utils.logUtil.LogUtil;
 import com.wuxin.blog.utils.security.ShiroUtil;
-import eu.bitwalker.useragentutils.UserAgent;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
+import java.util.Date;
 
 /**
  * @Author: wuxin001
@@ -40,7 +32,7 @@ import java.lang.reflect.Method;
 @Component
 public class LoginLogAop {
 
-    private static final Logger logger = LoggerFactory.getLogger(LogAop.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginLogAop.class);
 
     @Autowired
     private LoginLogService loginLogService;
@@ -89,32 +81,33 @@ public class LoginLogAop {
 
 
     // 检验访客id是否存在数据库中
-    public boolean checkId(String uuid){
+    public void checkId(String uuid, Log log) {
         boolean hasKey = redisService.hHasKey(VISITOR, uuid);
-        if(hasKey){
-            // 数据库中是否有该记录
-            QueryWrapper<Visitor> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("uuid",uuid);
-            Visitor one = visitorService.getOne(queryWrapper);
-            if(one != null){
-                // 获取mysql中记录
-            }else {
-                // 存入mysql
-            }
+        if (hasKey) {
+            Object o = redisService.hget(VISITOR, uuid);
+            Visitor cache = JsonFormatUtils.toObject(o, Visitor.class);
+            // 更新时间
+            assert cache != null;
+            cache.setUpdateTime(new Date());
+            // 更新 访问日志记录 获取mysql中记录 存入redis 一天
+            redisService.hset(VISITOR, uuid, cache, 86400L);
+
+        } else {
+            Visitor visitor = new Visitor();
+            visitor.setUuid(uuid);
+            visitor.setOs(log.getOs());
+            visitor.setBrowser(log.getBrowser());
+            visitor.setAddress(log.getIpSource());
+            visitorService.saveOrUpdate(visitor);
+            redisService.hset(VISITOR, uuid, visitor, 86400L);
         }
 
 
-        return false;
     }
 
-    public void add(){
+    public void add() {
 
     }
-
-
-
-
-
 
 
     public void handleResult(Log log, ProceedingJoinPoint proceedingJoinPoint) throws Throwable {

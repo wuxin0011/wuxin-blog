@@ -13,7 +13,7 @@ import com.wuxin.blog.pojo.BlogTag;
 import com.wuxin.blog.pojo.Comment;
 import com.wuxin.blog.pojo.Tag;
 import com.wuxin.blog.redis.CacheService;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.BlogService;
 import com.wuxin.blog.utils.JsonFormatUtils;

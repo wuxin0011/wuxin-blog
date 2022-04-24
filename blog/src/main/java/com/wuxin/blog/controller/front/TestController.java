@@ -6,35 +6,32 @@ import com.wuxin.blog.constant.GlobalConstant;
 import com.wuxin.blog.mode.UserComment;
 import com.wuxin.blog.pojo.Comment;
 import com.wuxin.blog.pojo.CommentReply;
-import com.wuxin.blog.redis.impl.CommentUserCacheService;
 import com.wuxin.blog.service.CommentService;
 import com.wuxin.blog.service.MailService;
 import com.wuxin.blog.service.UserService;
 import com.wuxin.blog.utils.result.Result;
 import com.wuxin.blog.utils.string.StringUtils;
 import com.wuxin.blog.utils.validate.ValidUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
 /**
  * @Author: wuxin001
- * @Date: 2022/01/02/0:00
- * @Description:
+ * @Date: 2022/02/23/22:48
+ * @Description: 测试
  */
-@Slf4j
 @RestController
-@RequestMapping("/comment")
-public class CommentController {
+public class TestController {
 
-    @Autowired
+
+    @Resource
     private CommentService commentService;
 
-    @Autowired
+    @Resource
     private UserService userService;
 
-    @Autowired
-    private CommentUserCacheService userCacheService;
 
     @Autowired
     private MailService mailService;
@@ -82,7 +79,7 @@ public class CommentController {
             return Result.error("发布失败，邮箱格式错误！！");
         }
         // 缓存是是否有该用户信息
-        UserComment user = userCacheService.getUserComment(comment.getUsername(), comment.getEmail(), comment.isSubscription());
+        UserComment user = commentService.cacheCheckUser(comment.getUsername(), comment.getEmail(), comment.isSubscription());
         Long userId;
         if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
             // 从数据库中获取用户信息
@@ -119,7 +116,6 @@ public class CommentController {
     @OperationLogger(value = "添加回复")
     @PostMapping("/reply/add")
     public Result addReply(@RequestBody CommentReply commentReply) {
-        log.info("comment reply:{}", commentReply);
         if (!((commentReply.getType().equals(Comment.BLOG_COMMENT))
                 || (commentReply.getType().equals(Comment.ABOUT_COMMENT))
                 || (commentReply.getType().equals(Comment.FRIEND_COMMENT))
@@ -139,7 +135,7 @@ public class CommentController {
             return Result.error("添加添加失败！邮箱格式不正确！");
         }
         // 从缓存中获取评论用户信息
-        UserComment user = userCacheService.getUserComment(commentReply.getReplyUsername(), commentReply.getReplyEmail(), commentReply.isSubscription());
+        UserComment user = commentService.cacheCheckUser(commentReply.getReplyUsername(), commentReply.getReplyEmail(), commentReply.isSubscription());
         Long userId;
         if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
             // 从数据库中获取用户信息 同时将用户信息缓存
@@ -154,7 +150,7 @@ public class CommentController {
         if (StringUtils.isNotNull(userId)) {
             commentReply.setReplyUserId(userId);
             // 回复用户
-            Long rid = commentReply.getReplyUserId();
+            Long rid = commentReply.getReplyId();
             // 被回复用户
             Long cid = commentReply.getCommentUserId();
             // 博主
@@ -175,10 +171,13 @@ public class CommentController {
                 mailService.pubMessage(commentReply.getReplyUsername(), commentReply.getReplyContent(), commentReply.getType(), commentReply.getBlogId());
             }
             // 回复用户和被回复用户不一致，需要判断是否发送
-            if (StringUtils.isNotNull(rid) && !rid.equals(cid)) {
-                UserComment commentUser = userCacheService.getUserComment(cid);
-                if (commentUser != null && commentUser.isSubscription()) {
-                    mailService.pubMessage(commentReply, commentUser.getEmail());
+            if (!rid.equals(cid)) {
+                UserComment userComment = commentService.cacheCommentSub(commentReply.getReplyUsername(), commentReply.getReplyEmail(), commentReply.isSubscription(), cid);
+                // 如果被回复用户订阅了评论 将评论内容发送给ta
+                if (StringUtils.isNotNull(userComment) && userComment.isSubscription()) {
+                    // 获取被回复的内容 同时将内容发布给订阅用户
+                    commentReply.setCommentUsername(userComment.getNickname());
+                    mailService.pubMessage(commentReply, userComment.getEmail());
                 }
             }
             commentService.addReply(commentReply);

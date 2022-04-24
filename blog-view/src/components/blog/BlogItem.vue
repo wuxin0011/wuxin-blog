@@ -1,16 +1,15 @@
 <template>
 <div>
-    <div class=" container ui padded attached segment m-padded-tb-large m-margin-bottom-big m-box
-      " v-for="item in blogList" :key="`blog${item.blogId}`" >
+    <div class=" container ui padded attached segment m-padded-tb-large m-margin-bottom-big m-box " v-for="item in blogList" :key="`blog${item.blogId}`">
         <div class="ui large red right corner label" v-if="item.top === 1">
             <i class="arrow alternate circle up icon"></i>
         </div>
-        <div class="ui middle aligned mobile reversed stackable" >
+        <div class="ui middle aligned mobile reversed stackable">
             <div class="ui grid m-margin-lr">
                 <!--标题-->
                 <div class="row m-padded-tb-small">
                     <h2 class="ui header m-center m-scaleup">
-                        <a @click.prevent="toBlog(item)" class="title" >{{ item.title }}</a>
+                        <a @click.prevent="toBlog(item)" class="title">{{ item.title }}</a>
                     </h2>
                 </div>
                 <!--文章简要信息-->
@@ -22,17 +21,15 @@
                         </div>
                         <div class="item m-views">
                             <i class="small eye icon"></i>
-                            <span>{{ item.views }}</span>
+                            <span>{{ item.views ? item.views : 0 }}</span>
                         </div>
                     </div>
                 </div>
                 <!--分类-->
-                <router-link :to="`/category/${item.category&&item.category.name?item.category.name:'error'}`" :class="` ui label ${item.category&&item.category.color?item.category.color:'teal'} ribbon` ">
-                    {{ item.category&&item.category.name?item.category.name:'error' }}
-                </router-link>
+                <router-link :to="`/category/${ item.category && item.category.name ? item.category.name : 'error' }`" :class="` ui label ${ item.category && item.category.color ? item.category.color : 'teal' } ribbon`"> {{ item.category && item.category.name ? item.category.name : "error" }} </router-link>
 
                 <!--文章Markdown描述-->
-                <div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces " v-html="item.description"></div>
+                <div class=" typo m-padded-tb-small line-numbers match-braces rainbow-braces " v-html="item.description"></div>
                 <!--阅读全文按钮-->
                 <div class="row m-padded-tb-small m-margin-top">
                     <a @click.prevent="toBlog(item)" class="color-btn">阅读全文</a>
@@ -42,14 +39,14 @@
                 <!--标签-->
                 <div class="row m-padded-tb-no">
                     <div class="column m-padding-left-no">
-                        <router-link :to="`/tag/${tag&&tag.name?tag.name:'error'}`" v-for="(tag, index) in item.tags" class="ui tag label m-text-500 m-margin-small" :class="`${tag&&tag.color?tag.color:'teal'}`" :key="index">{{ tag && tag.name?tag.name:'error' }}
+                        <router-link :to="`/tag/${tag && tag.name ? tag.name : 'error'}`" v-for="(tag, index) in item.tags" class="ui tag label m-text-500 m-margin-small" :class="`${tag && tag.color ? tag.color : 'teal'}`" :key="index">{{ tag && tag.name ? tag.name : "error" }}
                         </router-link>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div v-if="!blogList||blogList.length===0" class="no_content ">
+    <div v-if="!blogList || blogList.length === 0" class="no_content">
         <svg t="1642228193157" class="icon" viewBox="0 0 1173 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3459" width="200" height="200">
             <path d="M101.338732 852.123254a475.188652 171.876746 0 1 0 950.377304 0 475.188652 171.876746 0 1 0-950.377304 0Z" fill="#C8C8E9" p-id="3460"></path>
             <path d="M561.968413 362.577838L168.26956 420.409308a27.904695 27.904695 0 0 0-17.794299 24.871577l-2.224287 346.382196a47.316657 47.316657 0 0 0 30.937814 42.261458l385.812744 165.203885a50.754192 50.754192 0 0 0 39.22834 0L990.851447 833.924539a47.316657 47.316657 0 0 0 30.937814-42.261458L1023.406925 444.876469a27.904695 27.904695 0 0 0-18.400923-24.467161l-393.092229-57.83147a60.662381 60.662381 0 0 0-49.94536 0" fill="#DBDBF3" p-id="3461"></path>
@@ -85,7 +82,7 @@
 </template>
 
 <script>
-import dateFormat from '@/utils/date.js'
+import dateFormat from "@/utils/date.js";
 import {
     formatLink
 } from "@/utils/link";
@@ -97,16 +94,16 @@ export default {
             type: Array,
             required: true,
             default: () => {
-                return []
+                return [];
             },
         },
     },
     computed: {
         list() {
-            return this.blogList.forEach(blog => {
-                blog.description = formatLink(blog.description)
-            })
-        }
+            return this.blogList.forEach((blog) => {
+                blog.description = formatLink(blog.description);
+            });
+        },
     },
 
     filters: {
@@ -114,15 +111,12 @@ export default {
             let date = new Date(value);
             return dateFormat.formatDate(date, "yyyy-MM-dd");
         },
-
     },
     methods: {
         toBlog(blog) {
             this.$router.push(`/blog/${blog.blogId}`);
-        }
+        },
     },
-
-    
 };
 </script>
 
@@ -134,8 +128,8 @@ export default {
     align-items: center;
 }
 
-.title{
-    color:black !important;
+.title {
+    color: black !important;
     /* font-family: 'kaiti'; */
 }
 </style>

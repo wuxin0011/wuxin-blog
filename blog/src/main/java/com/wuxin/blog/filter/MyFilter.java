@@ -1,7 +1,6 @@
 package com.wuxin.blog.filter;
 
 import com.wuxin.blog.constant.Constants;
-import org.springframework.http.HttpStatus;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,14 +11,13 @@ import java.io.IOException;
 /**
  * @Author: wuxin001
  * @Date: 2022/01/28/23:03
- * @Description:
+ * @Description: 过滤器
  */
 @WebFilter(urlPatterns = "/admin/*", filterName = "authFilter")
 public class MyFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("filter");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Access-control-Allow-Origin", request.getHeader("Origin"));

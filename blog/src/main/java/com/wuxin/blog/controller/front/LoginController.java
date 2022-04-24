@@ -10,7 +10,7 @@ import com.wuxin.blog.mode.LoginBody;
 import com.wuxin.blog.mode.UserEmailPassword;
 import com.wuxin.blog.mode.UserRegister;
 import com.wuxin.blog.pojo.User;
-import com.wuxin.blog.redis.RedisKey;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.MailService;
 import com.wuxin.blog.service.UserService;

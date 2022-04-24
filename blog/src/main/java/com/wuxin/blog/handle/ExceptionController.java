@@ -2,15 +2,12 @@ package com.wuxin.blog.handle;
 
 import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.SignatureGenerationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.wuxin.blog.constant.HttpStatus;
 import com.wuxin.blog.exception.CustomException;
-import com.wuxin.blog.exception.NotFoundException;
 import com.wuxin.blog.exception.ServiceException;
 import com.wuxin.blog.utils.result.Result;
-import com.wuxin.blog.utils.security.JWTUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -69,16 +66,7 @@ public class ExceptionController {
     }
 
 
-    /**
-     * 内容不存在
-     *
-     * @return error message
-     */
-    @ExceptionHandler(NotFoundException.class)
-    public Result notFoundException() {
-        log.error("==================请求资源不存在=============");
-        return Result.create(HttpStatus.NOT_FOUND, "请求资源不存在~");
-    }
+
 
     @ExceptionHandler(TokenExpiredException.class)
     public Result tokenExpiredException() {
