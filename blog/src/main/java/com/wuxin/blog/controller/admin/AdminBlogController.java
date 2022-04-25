@@ -137,7 +137,7 @@ public class AdminBlogController {
         User loginUser = MySecurityUtils.getUser();
         Long userIdByBlogId = blogService.getUserIdByBlogId(blogId);
         // 判断用户是否为root用户，非root用户只能修改自己信息
-        if (MySecurityUtils.isPermission(loginUser.getRoleId(), loginUser.getUserId(), userIdByBlogId)) {
+        if (MySecurityUtils.isNotPermission(loginUser.getRoleId(), loginUser.getUserId(), userIdByBlogId)) {
             return Result.error("没有权限执行该操作！");
         }
         // 删除文章
