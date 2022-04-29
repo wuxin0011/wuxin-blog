@@ -3,6 +3,7 @@ package com.wuxin.blog.task;
 import com.wuxin.blog.pojo.Visitor;
 import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
+import com.wuxin.blog.redis.impl.BlogViewsCacheService;
 import com.wuxin.blog.service.AccessLogService;
 import com.wuxin.blog.service.LoginLogService;
 import com.wuxin.blog.service.VisitorService;
@@ -48,6 +49,10 @@ public class ScheduleTask {
 
     @Autowired
     private LoginLogService loginLogService;
+
+
+    @Autowired
+    private BlogViewsCacheService blogViewsCacheService;
 
 
     /**
@@ -109,6 +114,13 @@ public class ScheduleTask {
                 }
             }
         }
+    }
+
+    /**
+     * 缓存中用户记录同步到数据库
+     */
+    public void blogViewsSave() {
+        blogViewsCacheService.blogViewsSave();
     }
 
 

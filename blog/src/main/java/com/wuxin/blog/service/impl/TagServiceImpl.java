@@ -230,7 +230,7 @@ public class TagServiceImpl implements TagService {
         // 获取文章
         LambdaQueryChainWrapper<Blog> queryChainWrapper = new LambdaQueryChainWrapper<>(blogMapper);
         queryChainWrapper.select(Blog::getBlogId, Blog::getCreateTime, Blog::getCid, Blog::getDescription, Blog::getTop, Blog::getTitle, Blog::getViews);
-        Blog blog = queryChainWrapper.eq(Blog::getBlogId, blogTag.getBlogId()).eq(Blog::isPublish, 1).one();
+        Blog blog = queryChainWrapper.eq(Blog::getBlogId, blogTag.getBlogId()).eq(Blog::isPublish, 1).orderByDesc(Blog::getTop).orderByDesc(Blog::getCreateTime).one();
         // 从缓存中读取分类
         Category category = cacheService.getCategoryCacheByCid(blog.getCid());
         if (category != null) {

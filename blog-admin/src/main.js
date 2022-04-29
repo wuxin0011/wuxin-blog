@@ -15,7 +15,7 @@ console.log('\n\n %c  gitee %c '
   .concat('https://gitee.com/wuxin0011', ''), 'background: rgb(199, 29, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff', 'border-radius: 0 3px 3px 0; color:#fff')
 console.log(
   '\n\n %c  github %c '
-    .concat('https://github.com/wuxin0011/wuxin/tree/main/springboot-web-project/wuxin', ''), 'background: rgb(36, 41, 47); padding: 1px; border-radius: 3px 0 0 3px; color: #fff', 'border-radius: 0 3px 3px 0; color: #fff')
+    .concat('https://github.com/wuxin0011/wuxin-blog', ''), 'background: rgb(36, 41, 47); padding: 1px; border-radius: 3px 0 0 3px; color: #fff', 'border-radius: 0 3px 3px 0; color: #fff')
 
 new Vue({
   el: '#app',

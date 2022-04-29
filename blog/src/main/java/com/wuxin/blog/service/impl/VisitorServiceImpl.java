@@ -49,7 +49,7 @@ public class VisitorServiceImpl extends ServiceImpl<VisitorMapper, Visitor> impl
         String k = "visitor:page:list";
         String hk = RedisKey.getKey(k, pageVo.getCurrent(), pageVo.getLimit(), pageVo.getStart() + pageVo.getEnd() + pageVo.getKeywords());
         boolean hasKey = redisService.hHasKey(k, hk);
-        if(hasKey){
+        if (hasKey) {
             IPage<Visitor> page = (IPage<Visitor>) redisService.hget(k, hk);
             if (StringUtils.isNotNull(page) && page.getRecords().size() != 0) {
                 return page;
@@ -61,8 +61,7 @@ public class VisitorServiceImpl extends ServiceImpl<VisitorMapper, Visitor> impl
         queryChainWrapper.like(StringUtils.isNotEmpty(pageVo.getKeywords()), Visitor::getUuid, pageVo.getKeywords());
         queryChainWrapper.between(StringUtils.isNotEmpty(pageVo.getStart()) && StringUtils.isNotEmpty(pageVo.getEnd()), Visitor::getUpdateTime, pageVo.getStart(), pageVo.getEnd());
         Page<Visitor> page = queryChainWrapper.page(new Page<>(pageVo.getCurrent(), pageVo.getLimit()));
-        // 缓存有效时间两个小时
-        redisService.hset(k,hk,page,7200L);
+        redisService.hset(k, hk, page, 20L);
         return page;
     }
 }

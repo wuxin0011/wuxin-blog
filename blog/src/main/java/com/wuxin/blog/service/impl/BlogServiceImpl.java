@@ -230,6 +230,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Blog queryViewsById(long blogId) {
+        return blogMapper.queryViewsById(blogId);
+    }
+
+    @Override
     public SearchBlog beforeBlog(Long blogId) {
         return blogMapper.beforeBlog(blogId);
     }

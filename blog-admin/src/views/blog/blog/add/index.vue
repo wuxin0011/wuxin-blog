@@ -8,9 +8,11 @@
             <el-switch v-model="blog.appreciation" active-text="赞赏" class="m-margin-left-small" />
             <el-switch v-model="blog.top" active-text="置顶" :active-value="1" :inactive-value="0" />
             <el-switch v-model="blog.secrecy" active-text="保密" />
+            <el-switch v-model="isCache" active-text="开启本地缓存" @change="updateCahce" />
             <template v-if="blog.secrecy">
                 <el-input v-model="blog.password" style="width:300px;" placeholder="请输入密码" show-word-limit />
             </template>
+
         </el-col>
     </el-row>
 
@@ -59,6 +61,7 @@ export default {
     name: "BlogAdd",
     mixins: [blogMinix],
     methods: {
+
         // 验证数据
         handleCreate() {
 
@@ -99,7 +102,7 @@ export default {
 
             setTimeout(() => {
                 this.blog.tagIds = this.ids
-                
+
                 // 这里要延时执行，否则创建标签可能没有添加进去
                 setTimeout(() => {
                     createBlog(this.blog).then(res => {

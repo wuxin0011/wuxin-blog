@@ -11,30 +11,15 @@
                 </el-tooltip>
             </template>
         </el-table-column>
-        <el-table-column label="ip" align="center" width="150">
-            <template slot-scope="{ row }">
-                <span class="m-message">{{ row.ip ? row.ip : "未知" }}</span>
-            </template>
+        <el-table-column label="ip" align="center" width="150" prop="ip">
         </el-table-column>
-        <el-table-column label="来源" align="center" width="150">
-            <template slot-scope="{ row }">
-                <span>{{ row.address ? row.address : "未知" }}</span>
-            </template>
+        <el-table-column label="来源" align="center" width="150" prop="address">
         </el-table-column>
-        <el-table-column label="浏览器" align="center" width="150">
-            <template slot-scope="{ row }">
-                <span>{{ row.browser ? row.browser : "未知" }}</span>
-            </template>
+        <el-table-column label="浏览器" align="center" width="150" prop="browser">
         </el-table-column>
-        <el-table-column label="os" align="center" width="150">
-            <template slot-scope="{ row }">
-                <span>{{ row.os ? row.os : "未知" }}</span>
-            </template>
+        <el-table-column label="os" align="center" width="150" prop="os">
         </el-table-column>
-        <el-table-column label="最后访问时间" align="center" width="150">
-            <template slot-scope="{ row }">
-                <span>{{ row.updateTime ? row.updateTime : "未知" }}</span>
-            </template>
+        <el-table-column label="最后访问时间" align="center" width="150" prop="updateTime">
         </el-table-column>
         <el-table-column label="操作" align="center" width="200">
             <template slot-scope="{ row }">
@@ -71,6 +56,7 @@ export default {
         getList() {
             getVisitorList(this.query).then((res) => {
                 this.list = res.result.records;
+                this.total = res.result.total;
             });
         },
 

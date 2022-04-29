@@ -45,6 +45,8 @@ export const blogMinix = {
         tagIds: [],
         views: 0,
       },
+      cacheKey:'wuxin_blog_isCache',
+      isCache: false
     }
   },
   computed: {
@@ -54,9 +56,10 @@ export const blogMinix = {
   methods: {
     // 描述
     initVditor() {
-      this.descriptionVditor = createVditor('vditor-description', 400, false)
-      this.contentVditor = createVditor('vditor-content', 500, false)
-      this.getLabelList()
+      let that = this
+      that.descriptionVditor = createVditor('vditor-description', 400, that.isCache)
+      that.contentVditor = createVditor('vditor-content', 500, that.isCache)
+      that.getLabelList()
     },
     getLabelList() {
       getCategoryList().then(res => {
@@ -99,7 +102,7 @@ export const blogMinix = {
       } else {
         this.ids.push(id)
       }
-      
+
 
     },
 
@@ -116,16 +119,31 @@ export const blogMinix = {
           this.blog.cid = res.cid
         });
       }
-      
+
 
     },
 
 
+    updateCahce(){
+      let that = this
+      window.localStorage.setItem(that.cacheKey,that.isCache)
+      if(this.isCache){
+        this.$message.success('本地缓存开启成功！')
+      }else{
+        this.$message.warning('本地缓存成功关闭！')
+      }
+      console.log(this.isCache);
+    }
+
 
   },
   mounted() {
+    // 是否缓存
+    let isCache = window.localStorage.getItem(this.cacheKey)
+    if (isCache === true || isCache==='true') {
+      this.isCache = true
+    }
     this.initVditor()
+
   }
 }
-
-

@@ -34,6 +34,15 @@ public class ScheduleTaskConfig {
     }
 
     /**
+     * 定时任务每天23:30点钟执行
+     */
+    @Scheduled(cron = "0 30 23 * * ? ")
+    private void blogViewsSave() {
+        logger.info("----------------文章访问量统计中--------------");
+        scheduleTask.blogViewsSave();
+    }
+
+    /**
      * 定时任务每3天23:50点钟执行
      */
     @Scheduled(cron = "0 50 23 */3 * ? ")

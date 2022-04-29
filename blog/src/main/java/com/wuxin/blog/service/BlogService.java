@@ -160,4 +160,11 @@ public interface BlogService {
     int delBlogByUserId(Long userId);
 
     Long getUserIdByBlogId(Long blogId);
+
+    /**
+     * 查询文章缓存量
+     * @param blogId 文章id
+     * @return blog
+     */
+    Blog queryViewsById(long blogId);
 }

@@ -174,6 +174,29 @@ public class RedisKey {
      */
     public static final String VISITOR_IDENTIFICATION = "visitor_identification";
 
+    /**
+     * 文章缓存浏览量 缓存的文章id
+     */
+    public static final String blog_id_list = "blog:id:list";
+
+    /**
+     * 缓存文章浏览量保存的uuid
+     */
+    public static final String blog_views_uuid = "blog:views:uuid";
+
+    /**
+     * 缓存文章浏览量保存的uuid
+     */
+    public static final String blog_views = "blog:views";
+
+
+
+    /**
+     * 缓存文章浏览量保存的uuid
+     */
+    public static final String blog_list_save= "blog:list:save";
+
+
 
     public static String getKey(Object id) {
         return id + "_id";
