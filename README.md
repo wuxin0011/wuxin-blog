@@ -3,9 +3,11 @@
 
 主要借鉴了 :heart:[RuoYi-Vue](https://gitee.com/y_project/RuoYi-Vue) ，[:heart:Naccl/NBlog](https://github.com/Naccl/NBlog) ，感谢两位大佬的项目开源 ，郑重感谢！:smile:
 
-项目主要技术介绍
+项目主要技术
 
-**:tomato:后端 ** 
+
+
+**:tomato:后端**
 
 - [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/)
 
