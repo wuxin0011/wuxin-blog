@@ -1,9 +1,11 @@
 # wuxin-blog
-我的博客项目  [原项目地址](https://github.com/wuxin0011/wuxin/tree/main/springboot-web-project/wuxin) 本项目为前后端分离（springboot+vue），主要借鉴了 [RuoYi-Vue](https://gitee.com/y_project/RuoYi-Vue) ，[Naccl/NBlog](https://github.com/Naccl/NBlog)
+ 本项目为前后端分离springboot+vue [原项目地址](https://github.com/wuxin0011/wuxin/tree/main/springboot-web-project/wuxin) ,
+
+主要借鉴了 :heart:[RuoYi-Vue](https://gitee.com/y_project/RuoYi-Vue) ，[:heart:Naccl/NBlog](https://github.com/Naccl/NBlog) ，感谢两位大佬的项目开源 ，郑重感谢！:smile:
 
 项目主要技术介绍
 
-**后端**
+**:tomato:后端 ** 
 
 - [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/)
 
@@ -25,7 +27,7 @@
 
   
 
-**前端 管理界面**
+**:tomato: 前端 管理界面**
 
 - [Vue.js ](https://cn.vuejs.org/)
 
@@ -35,7 +37,7 @@
 
 
 
-**前端 访问界面**
+**:tomato:前端 访问界面**
 
 - [Vue.js ](https://cn.vuejs.org/)
 
