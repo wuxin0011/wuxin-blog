@@ -11,7 +11,7 @@
 
 - [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/)
 
--  [MyBatis-Plus](https://www.mybatis-plus.com/)
+-  [MyBatis-Plus ](https://www.mybatis-plus.com/)
 
 -  [Redis 缓存控制](https://redis.io/)
 
@@ -32,20 +32,19 @@
 **:tomato: 前端 管理界面**
 
 - [Vue.js ](https://cn.vuejs.org/)
-
-- [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin) 基于vue2的后台管理界面
 - [Element-UI](https://element.eleme.cn/#/zh-CN)
-- [Vditor](https://b3log.org/vditor/)内容编辑器
+- [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin) 基于vue2的后台管理界面
+- [Vditor](https://b3log.org/vditor/) 内容编辑器
 
 
 
 **:tomato:前端 访问界面**
 
 - [Vue.js ](https://cn.vuejs.org/)
-
 - [semantic-ui](https://semantic-ui.com/) 响应式前端界面
 - [Element-UI](https://element.eleme.cn/#/zh-CN)  弥补semantic-ui一些功能上不足之处
-- [meting-js](https://github.com/metowolf/MetingJS) 音乐播放器
+- [meting-js](https://github.com/metowolf/MetingJS) 音乐播放器支持
+- [CND jsdelivr ](https://www.jsdelivr.com/) 资源加速访问
 
 
 
