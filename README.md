@@ -17,6 +17,8 @@
 
 -  [Shiro作为权限控制](https://shiro.apache.org/)
 
+-  [JWT](https://jwt.io/) 
+
 - [Thymeleaf 邮件发送支持](https://www.thymeleaf.org/)
 
 - 定时任务 
