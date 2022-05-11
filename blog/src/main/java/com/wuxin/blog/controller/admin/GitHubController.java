@@ -12,14 +12,17 @@ import com.wuxin.blog.exception.CustomException;
 import com.wuxin.blog.mode.Github;
 import com.wuxin.blog.pojo.UploadPicture;
 import com.wuxin.blog.pojo.GithubSetting;
+import com.wuxin.blog.pojo.User;
 import com.wuxin.blog.service.MySystemService;
 import com.wuxin.blog.service.UploadPictureService;
 import com.wuxin.blog.utils.GiteeImg.GitHubUtils;
 import com.wuxin.blog.utils.GiteeImg.GiteeUtils;
 import com.wuxin.blog.utils.KeyUtil;
 import com.wuxin.blog.utils.result.Result;
+import com.wuxin.blog.utils.security.MySecurityUtils;
 import com.wuxin.blog.utils.string.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +55,7 @@ public class GitHubController {
      * @return 文件地址
      */
     @AccessLimit(seconds = 60, limitCount = 10, msg = "操作频率过高！一分钟之后再试！")
-    @RequiresRoles("root")
+    @RequiresRoles(value={"root","admin","user"},logical = Logical.OR)
     @OperationLogger("上传图像")
     @PostMapping("/upload/user/avatar")
     public Result uploadImg(@RequestParam("file") MultipartFile file) throws IOException {
@@ -67,6 +70,7 @@ public class GitHubController {
      * @throws Exception error
      */
     @AccessLimit(seconds = 60, limitCount = 10, msg = "操作频率过高！一分钟之后再试！")
+    @RequiresRoles(value={"root","admin","user"},logical = Logical.OR)
     @OperationLogger("上传图片")
     @PostMapping("/upload/blog/img")
     public Result uploadBlogImg(@RequestParam("file") MultipartFile file) throws Exception {
@@ -74,7 +78,7 @@ public class GitHubController {
     }
 
 
-    @RequiresRoles("root")
+    @RequiresRoles(value={"root","admin","user"},logical = Logical.OR)
     @OperationLogger("上传音频文件")
     @PostMapping("/upload/music")
     public Result uploadMusic(@RequestParam("file") MultipartFile file) throws Exception {

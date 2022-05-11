@@ -16,4 +16,14 @@ public class ErrorPathController {
     public Result notFound() {
         return Result.create(404, "路径未找到！");
     }
+
+    @GetMapping("")
+    public Result welcome() {
+        return Result.create(200, "欢迎访问wuxin-api,邮箱2191377759@qq.com,Github: https://github.com/wuxin0011/wuxin-blog");
+    }
+
+    @GetMapping("/wuxin-api")
+    public Result welcome1() {
+        return Result.create(200, "欢迎访问wuxin-api,邮箱2191377759@qq.com,Github: https://github.com/wuxin0011/wuxin-blog");
+    }
 }

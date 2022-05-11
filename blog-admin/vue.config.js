@@ -27,7 +27,8 @@ module.exports = {
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
         // target: 'http://localhost:8888',
-        target: 'http://1.117.46.114:8888/wuxin-api/',
+        // target: 'http://1.117.46.114:8888/wuxin-api/',
+        target: 'http://wuxin-api:8888/wuxin-api/',
         // ws: true,
         changeOrigin: true,
         pathRewrite: {

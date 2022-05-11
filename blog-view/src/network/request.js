@@ -5,8 +5,10 @@ import {
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 const instance = axios.create({
-    baseURL: 'http://1.117.46.114:8888/wuxin-api/',
+    // baseURL: 'http://1.117.46.114:8888/wuxin-api/',
+    // baseURL: 'http://wuxin:8888/wuxin-api/',
     // baseURL: 'http://localhost:8888/',
+    baseURL: '/wuxin-api',
     timeout: 30000
 })
 
