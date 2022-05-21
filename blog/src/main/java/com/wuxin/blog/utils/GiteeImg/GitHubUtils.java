@@ -1,8 +1,5 @@
 package com.wuxin.blog.utils.GiteeImg;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * @Author: wuxin001
  * @Date: 2021/09/16/20:45
@@ -24,6 +21,6 @@ public class GitHubUtils {
      * %s => 仓库路径(repo) 如果分支不唯一，一定要加上分支！ 格式仓库名@分支名
      * %s => 文件的路径(path)文件路径名称
      */
-    public static String ACCESS_URL = "https://cdn.jsdelivr.net/gh/%s/%s/%s";
+    public static String ACCESS_URL = "https://fastly.jsdelivr.net/gh/%s/%s/%s";
 
 }

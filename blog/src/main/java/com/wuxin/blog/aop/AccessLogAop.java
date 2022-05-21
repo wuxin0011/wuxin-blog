@@ -4,7 +4,6 @@ import com.wuxin.blog.annotation.VisitLogger;
 import com.wuxin.blog.constant.HttpStatus;
 import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.constant.RedisKeyExpire;
-import com.wuxin.blog.mode.Log;
 import com.wuxin.blog.pojo.AccessLog;
 import com.wuxin.blog.pojo.Visitor;
 import com.wuxin.blog.redis.RedisService;
@@ -14,8 +13,6 @@ import com.wuxin.blog.service.VisitorService;
 import com.wuxin.blog.utils.JsonFormatUtils;
 import com.wuxin.blog.utils.ip.AddressUtils;
 import com.wuxin.blog.utils.ip.IpUtils;
-import com.wuxin.blog.utils.logUtil.LogUtil;
-import com.wuxin.blog.utils.result.ValidResult;
 import com.wuxin.blog.utils.security.ShiroUtil;
 import com.wuxin.blog.utils.servlet.ServletUtils;
 import com.wuxin.blog.utils.string.StringUtils;
@@ -29,8 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -144,7 +139,7 @@ public class AccessLogAop {
             //请求头没有uuid，签发uuid并保存到数据库和Redis
             identification = saveUUID(response, accessLog);
         } else {
-            //校验Redis中是否存在uuid  如果不存在从mysql中获取 如果mysql中不存在
+            //校验Redis中是否存在uuid  如果不存在从mysql中获取 如果mysql中不存在，添加到Mysql中
             if (!uuidIsExist(identification)) {
                 identification = saveUUID(response, accessLog);
             }

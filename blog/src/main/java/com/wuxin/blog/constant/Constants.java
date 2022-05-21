@@ -29,13 +29,10 @@ public class Constants {
     public static final String HTTPS = "https://";
 
 
-
     /**
      * Authentication
      */
     public static final String AUTHENTICATION = "Authentication";
-
-
 
 
     /**
@@ -48,6 +45,12 @@ public class Constants {
      * UTF-8 字符集
      */
     public static final String USER_ROLE = "user_role";
+
+
+    /**
+     * unknown 信息
+     */
+    public static final String UNKNOWN = "unknown";
 
 
 }
