@@ -80,14 +80,6 @@ const routes = [
                 },
             },
             {
-                path: "update",
-                name: 'Update',
-                component: () => import("@/views/timeline/index.vue"),
-                meta: {
-                    title: "通知",
-                },
-            },
-            {
                 path: "archive",
                 name: 'Archive',
                 component: () => import("@/views/archive/index.vue"),
