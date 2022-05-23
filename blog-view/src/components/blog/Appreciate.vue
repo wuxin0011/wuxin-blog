@@ -52,11 +52,11 @@ export default {
        
         wechatPayment: {
             type: String,
-            default: "https://cdn.jsdelivr.net/gh/wuxin0011/wuxin@main/img/202112/20211203093215.png",
+            default: "https://fastly.jsdelivr.net/gh/wuxin0011/wuxin@main/img/202112/20211203093215.png",
         },
          alipay: {
             type: String,
-            default: "https://cdn.jsdelivr.net/gh/wuxin0011/wuxin@main/img/202112/20211203093231.png",
+            default: "https://fastly.jsdelivr.net/gh/wuxin0011/wuxin@main/img/202112/20211203093231.png",
         },
     
     },

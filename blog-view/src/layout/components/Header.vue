@@ -25,7 +25,7 @@ export default {
         return {
             loaded: false,
             headerBackgroundImage: {
-                'backgroundImage': changeUrl('https://cdn.jsdelivr.net/gh/wuxin0011/wuxin@main//blog-resource/img/bg1.jpg')
+                'backgroundImage': changeUrl('https://fastly.jsdelivr.net/gh/wuxin0011/wuxin@main//blog-resource/img/bg1.jpg')
             },
             container: null,
             clickCount: 1,

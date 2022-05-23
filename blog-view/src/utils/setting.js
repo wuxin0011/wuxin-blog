@@ -21,9 +21,9 @@ export const colors = [
 // 图片列表
 export const backgroundImageList = [
     'default',
-    'https://cdn.jsdelivr.net/gh/wuxin0011/wuxin@main/blog-resource/img/bg1.jpg',
-    'https://cdn.jsdelivr.net/gh/wuxin0011/wuxin@main/blog-resource/img/bg2.jpg',
-    'https://cdn.jsdelivr.net/gh/wuxin0011/wuxin@main/blog-resource/img/bg3.jpg',
+    'https://fastly.jsdelivr.net/gh/wuxin0011/wuxin@main/blog-resource/img/bg1.jpg',
+    'https://fastly.jsdelivr.net/gh/wuxin0011/wuxin@main/blog-resource/img/bg2.jpg',
+    'https://fastly.jsdelivr.net/gh/wuxin0011/wuxin@main/blog-resource/img/bg3.jpg',
 ]
 
 
@@ -76,7 +76,7 @@ export const defaultSetting = {
  */
 export function settingBackgroundImageUrl(show, url) {
     if ((show) && (url !== 'default')) {
-        return 'url(' + `${url}` + ')' || "url('https://cdn.jsdelivr.net/gh/wuxin0011/wuxin@main/img/202112/20211217101725.png')"
+        return 'url(' + `${url}` + ')' || "url('https://fastly.jsdelivr.net/gh/wuxin0011/wuxin@main/img/202112/20211217101725.png')"
     } else {
         return null
     }

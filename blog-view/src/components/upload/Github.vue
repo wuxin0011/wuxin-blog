@@ -220,7 +220,7 @@ export default {
 
         // 图片使用jsdelivr=>CDN加速访问
         accessUrl(filePath) {
-            return `https://cdn.jsdelivr.net/gh/${this.user.username}/${this.repoName}${filePath}`;
+            return `https://fastly.jsdelivr.net/gh/${this.user.username}/${this.repoName}${filePath}`;
         },
 
         submitUpload() {
