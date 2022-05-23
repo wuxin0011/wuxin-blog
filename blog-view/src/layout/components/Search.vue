@@ -142,7 +142,7 @@ export default {
         "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
 }
 
-a.item{
+a.item {
     color: black !important;
 }
 

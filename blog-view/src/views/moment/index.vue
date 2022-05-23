@@ -86,7 +86,7 @@ export default {
             this.current = current;
             getMomentList(this.current, this.limit).then((res) => {
                 if (res.code === 200) {
-                    
+
                     const {
                         records,
                         pages,

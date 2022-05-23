@@ -51,7 +51,7 @@ export default {
     methods: {
         //监听页码改变的事件
         handleCurrentChange(newPage) {
-           if (this.$route.name === 'Index') {
+            if (this.$route.name === 'Index') {
                 window.scrollTo({
                     top: this.clientSize.clientHeight,
                     behavior: 'smooth'

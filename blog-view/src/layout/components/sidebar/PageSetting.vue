@@ -2,7 +2,7 @@
 <div class="setting">
     <el-button size="mini" type="primary" icon="el-icon-setting" @click.prevent="drawer = !drawer">
     </el-button>
-    <el-drawer title="页面配置" :visible.sync="drawer" :modal="false" :with-header="false"  size="40%"  style="min-width:400px;">
+    <el-drawer title="页面配置" :visible.sync="drawer" :modal="false" :with-header="false" size="40%" style="min-width:400px;">
         <el-card>
             <h3 slot="header">页面配置</h3>
             <h4 class="ui horizontal divider header">
@@ -33,7 +33,7 @@
                 </el-col>
                 <el-col :span="6" :xs="24">
                     <el-tooltip content="请先关闭 夜间模式 和 背景图 自定义背景才会生效" :disabled=" !settingState.background.isShowImage && !settingState.nightMode ">
-                        <el-color-picker size="small" v-model="settingState.background.color"  show-alpha/>
+                        <el-color-picker size="small" v-model="settingState.background.color" show-alpha />
                     </el-tooltip>
                 </el-col>
                 <el-col :span="10" :xs="24" class="m-mobile-hide">

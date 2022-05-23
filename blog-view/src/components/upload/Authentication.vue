@@ -39,7 +39,7 @@ export default {
                 avatar: '',
             },
             tokenType: "github",
-            
+
         };
     },
 
@@ -53,16 +53,16 @@ export default {
             return this.$store.getters["upload/user"];
         },
 
-        isDisabled(){
+        isDisabled() {
             return !(this.user && this.user.username && this.user.token && this.user.url && this.user.avatar)
         }
     },
 
     mounted() {
         this.tokenType = this.type;
-        
+
         this.changeType();
-        
+
     },
 
     methods: {
@@ -95,7 +95,6 @@ export default {
             this.user = {};
         },
 
-      
     },
 };
 </script>

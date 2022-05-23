@@ -60,7 +60,7 @@
 import MyNav from "@/layout/components/Nav";
 import { getAdminUserInfo, getRandomBlog, webSite } from "@/api/home.js";
 import FooterIndex from "@/layout/components/Footer";
-import HeaderIndex from "@/layout/components/sidebar/Header";
+import HeaderIndex from "@/layout/components/Header";
 import Tag from "@/layout/components/sidebar/Tag";
 import Category from "@/layout/components/sidebar/Category";
 import PageSetting from "@/layout/components/sidebar/PageSetting";

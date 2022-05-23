@@ -81,9 +81,9 @@ export default {
             type: Array,
             default: [],
         },
-        site:{
-            type:Object,
-            default:{}
+        site: {
+            type: Object,
+            default: {}
         }
 
     },

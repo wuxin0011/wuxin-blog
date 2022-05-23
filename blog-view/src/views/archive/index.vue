@@ -3,8 +3,6 @@
     <div class="ui top attached segment" style="text-align: center">
         <h2 class="m-text-500">文章归档</h2>
         <p>好! 目前共计 {{ count }} 篇日志。 继续努力。</p>
-        <!-- <span>{{JSON.stringify(archiveMap)}}</span> -->
-         <!-- <div v-for="item in archiveMap" :key="item">{{item}}</div> -->
     </div>
     <div class="ui attached segment">
         <div class="timeline">
@@ -50,9 +48,9 @@ export default {
         Title
     },
     filters: {
-      formatDay: function(value) {
-        return formatDay(value);
-      }
+        formatDay: function (value) {
+            return formatDay(value);
+        }
     },
     data() {
         return {
@@ -64,7 +62,7 @@ export default {
                 3: 'tl-purple',
                 4: 'tl-red',
             },
-            
+
         }
     },
 
@@ -72,7 +70,7 @@ export default {
         count() {
             let count = 0;
             this.archiveMap.forEach(item => {
-                item['list'].forEach(c=>{
+                item['list'].forEach(c => {
                     count++
                 })
             });
@@ -84,7 +82,6 @@ export default {
     created() {
         this.getArchives()
     },
-
 
     methods: {
         getArchives() {

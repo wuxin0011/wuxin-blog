@@ -233,8 +233,6 @@ export default {
                         return this.$message.error("获取不到文章类型");
                     }
 
-
-
                     this.$emit("addReply", {
                         'replyUsername': this.commentUser.username,
                         'replyEmail': this.commentUser.email,
@@ -246,7 +244,7 @@ export default {
                         'blogId': this.id,
                         'type': this.type,
                     });
-                    
+
                 }
             });
         },

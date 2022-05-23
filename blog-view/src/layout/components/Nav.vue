@@ -1,8 +1,5 @@
 <template>
-<div ref="nav" class="ui fixed stackable pointing menu " :class="{
-      transparent: $route.name === 'Index' && clientSize.clientWidth > 768,
-      inverted: inverted,
-    }">
+<div ref="nav" class="ui fixed stackable pointing menu " :class="{ transparent: $route.name === 'Index' && clientSize.clientWidth > 768, inverted: inverted, }">
     <div class="ui container">
         <router-link to="/welcome">
             <h3 class="ui header item ">
@@ -54,6 +51,7 @@
             <i class="sidebar icon"></i>
         </div>
     </div>
+    <!-- 搜索内容 -->
     <Search :open="open" @changeSearch="changeSearch"></Search>
 </div>
 </template>

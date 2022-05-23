@@ -123,7 +123,7 @@ export default {
             default: -1,
         },
 
-         submitLoading: {
+        submitLoading: {
             type: Boolean,
             default: false,
         },
