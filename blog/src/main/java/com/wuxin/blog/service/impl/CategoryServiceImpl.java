@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wuxin.blog.constant.Constants;
+import com.wuxin.blog.constant.RedisKey;
+import com.wuxin.blog.exception.CustomException;
 import com.wuxin.blog.mapper.BlogMapper;
 import com.wuxin.blog.mapper.BlogTagMapper;
 import com.wuxin.blog.mapper.CategoryMapper;
@@ -13,7 +15,6 @@ import com.wuxin.blog.pojo.BlogTag;
 import com.wuxin.blog.pojo.Category;
 import com.wuxin.blog.pojo.Tag;
 import com.wuxin.blog.redis.CacheService;
-import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.CategoryService;
 import com.wuxin.blog.utils.ThrowUtils;
@@ -83,27 +84,38 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findCategoryByName(String name) {
-        return cacheService.getCategoryCacheByName(name);
+        Category category = null;
+        category = cacheService.getCategoryCacheByName(name);
+        if (category == null) {
+            try {
+                category = new LambdaQueryChainWrapper<>(categoryMapper).eq(Category::getName, name).one();
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new CustomException("该分类标签不唯一！请前往控制台删除！");
+            }
+            if (category == null) {
+                throw new CustomException("获取不到分类！");
+            }
+        }
+        return category;
     }
 
     @Override
     public IPage<Blog> findBlogByCategoryName(Integer current, Integer size, String categoryName) {
 
+        Category category = findCategoryByName(categoryName);
+
         String key = RedisKey.getKey(categoryName, current, size);
         boolean hasKey = redisService.hHasKey(BLOG_CATEGORY, key);
-        if(hasKey){
+        if (hasKey) {
             IPage<Blog> page = (IPage<Blog>) redisService.hget(BLOG_CATEGORY, key);
-            if(StringUtils.isNotNull(page) && page.getRecords().size() != 0){
+            if (StringUtils.isNotNull(page) && page.getRecords().size() != 0) {
                 return page;
             }
         }
 
         Page<Blog> page = new Page<>(current, size);
-        Category category = findCategoryByName(categoryName);
-        // 如果分类不为空
-        if (category == null) {
-            return page;
-        }
+
         // 按照分类名分页获取文章
         Page<Blog> blogPage = new LambdaQueryChainWrapper<>(blogMapper)
                 .eq(Blog::getCid, category.getCid())
@@ -126,7 +138,7 @@ public class CategoryServiceImpl implements CategoryService {
             blog.setTags(tags);
         });
 
-        redisService.hset(BLOG_CATEGORY,key,blogPage,600);
+        redisService.hset(BLOG_CATEGORY, key, blogPage, 600);
 
         // 存入redis// 有效时间为十分钟
         return blogPage;
@@ -140,17 +152,18 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public IPage<Category> selectListByPage(Integer current, Integer limit, String keywords) {
+
         String key = RedisKey.getKey(keywords, current, limit);
         boolean hasKey = redisService.hHasKey("category:page:list", key);
-        if(hasKey){
+        if (hasKey) {
             Page<Category> page = (Page<Category>) redisService.hget("category:page:list", key);
-            if(StringUtils.isNotNull(page) && page.getRecords().size() !=0){
+            if (StringUtils.isNotNull(page) && page.getRecords().size() != 0) {
                 return page;
             }
         }
         LambdaQueryChainWrapper<Category> queryChainWrapper = new LambdaQueryChainWrapper<>(categoryMapper);
         Page<Category> page = queryChainWrapper.like(StringUtils.isNotEmpty(keywords), Category::getName, keywords).page(new Page<>(current, limit));
-        redisService.hset("category:page:list",key,page,100L);
+        redisService.hset("category:page:list", key, page, 100L);
         return page;
     }
 
@@ -158,9 +171,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Object> blogCountByCategoryName() {
         boolean hasKey = redisService.hasKey("category:blog:count");
-        if(hasKey){
+        if (hasKey) {
             List<Object> o = (List<Object>) redisService.get("category:blog:count");
-            if(StringUtils.isNotNull(o) && o.size()!=0){
+            if (StringUtils.isNotNull(o) && o.size() != 0) {
                 return o;
             }
         }
@@ -173,7 +186,7 @@ public class CategoryServiceImpl implements CategoryService {
             map.put("value", count);
             arrayList.add(map);
         });
-        redisService.set("category:blog:count",arrayList,6000L);
+        redisService.set("category:blog:count", arrayList, 6000L);
         // 将数据统计如数据库中
         return arrayList;
     }

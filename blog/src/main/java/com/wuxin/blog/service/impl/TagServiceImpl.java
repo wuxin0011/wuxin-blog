@@ -1,10 +1,12 @@
 package com.wuxin.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wuxin.blog.constant.Constants;
+import com.wuxin.blog.exception.CustomException;
 import com.wuxin.blog.mapper.BlogMapper;
 import com.wuxin.blog.mapper.CategoryMapper;
 import com.wuxin.blog.mapper.TagMapper;
@@ -59,7 +61,6 @@ public class TagServiceImpl implements TagService {
     @Autowired
     private CacheService cacheService;
 
-
     @Autowired
     private CategoryMapper categoryMapper;
 
@@ -84,7 +85,22 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag findTagByName(String tagName) {
-        return cacheService.getTagCache(tagName);
+        Tag tag = null;
+        // 从缓存中获取tagName，判断tag是否存在
+        tag = cacheService.getTagCache(tagName);
+        if (tag == null) {
+            // 从数据库中读取name是否存在
+            try {
+                tag = new LambdaQueryChainWrapper<>(tagMapper).eq(Tag::getName, tagName).one();
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new CustomException("该标签不唯一！请前往控制台删除！");
+            }
+            if (tag == null) {
+                throw new CustomException("标签不存在！");
+            }
+        }
+        return tag;
     }
 
     @Override
@@ -99,7 +115,6 @@ public class TagServiceImpl implements TagService {
         List<BlogTag> list = chain.eq(BlogTag::getBlogId, blogId).list();
         ArrayList<Tag> tags = new ArrayList<>();
         for (BlogTag blogTag : list) {
-            // Tag tagCacheById = cacheService.getTagCacheById(blogTag.getTagId());
             Tag tag = tagMapper.selectById(blogTag.getTagId());
             tags.add(tag);
         }
@@ -108,6 +123,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag find(Long id) {
+
         return cacheService.getTagCacheById(id);
     }
 
@@ -162,6 +178,8 @@ public class TagServiceImpl implements TagService {
     @Override
     public IPage<Blog> findBlogByTagName(Integer current, Integer size, String tagName) {
 
+        Tag tag = findTagByName(tagName);
+
         String key = RedisKey.getKey("tag:blog:page", current, size, tagName);
         boolean hasKey = redisService.hHasKey("tag:blog:page", key);
         if (hasKey) {
@@ -172,11 +190,6 @@ public class TagServiceImpl implements TagService {
         }
 
         Page<Blog> blogPage = new Page<>(current, size);
-        // 从缓存中读取tagName
-        Tag tag = cacheService.getTagCache(tagName);
-        if (tag == null) {
-            return blogPage;
-        }
         // 获取文章标签列表
         IPage<BlogTag> tagPage = new LambdaQueryChainWrapper<>(blogTagMapper).eq(BlogTag::getTagId, tag.getTagId()).page(new Page<>(current, size));
         List<Blog> blogList = new ArrayList<>();
@@ -222,7 +235,7 @@ public class TagServiceImpl implements TagService {
             arrayList.add(map);
         });
         // 缓存一个小时
-        redisService.set("tag:blog:count",arrayList,3600L);
+        redisService.set("tag:blog:count", arrayList, 3600L);
         return arrayList;
     }
 

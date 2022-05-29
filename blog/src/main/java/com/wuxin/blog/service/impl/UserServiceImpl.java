@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.exception.CustomException;
 import com.wuxin.blog.mapper.ChatUrlMapper;
 import com.wuxin.blog.mapper.UserMapper;
@@ -12,8 +13,6 @@ import com.wuxin.blog.mode.PageVo;
 import com.wuxin.blog.mode.UserPass;
 import com.wuxin.blog.pojo.ChatUrl;
 import com.wuxin.blog.pojo.User;
-import com.wuxin.blog.redis.CacheService;
-import com.wuxin.blog.constant.RedisKey;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.redis.impl.CommentUserCacheService;
 import com.wuxin.blog.service.UserService;
@@ -94,12 +93,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByEmail(String email) {
-        return new LambdaQueryChainWrapper<>(userMapper).eq(User::getEmail, email).one();
+        User user = null;
+        try {
+            user = new LambdaQueryChainWrapper<>(userMapper).eq(User::getEmail, email).one();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException("邮箱重复！");
+        }
+        return user;
     }
 
     @Override
     public User findUserByUsername(String username) {
-        return new LambdaQueryChainWrapper<>(userMapper).eq(User::getUsername, username).one();
+        User user = null;
+        try {
+            user = new LambdaQueryChainWrapper<>(userMapper).eq(User::getUsername, username).one();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException("用户名重复！");
+        }
+        return user;
     }
 
     @Override
@@ -111,7 +124,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User finUserByPhone(String phone) {
-        return new LambdaQueryChainWrapper<>(userMapper).eq(User::getPhone, phone).one();
+        User user = null;
+        try {
+            user = new LambdaQueryChainWrapper<>(userMapper).eq(User::getPhone, phone).one();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException("手机号重复！");
+        }
+        return user;
+
     }
 
 
@@ -284,7 +305,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByNickName(String nickname) {
-        return new LambdaQueryChainWrapper<>(userMapper).eq(User::getNickname, nickname).one();
+        User user = null;
+        try {
+            user = new LambdaQueryChainWrapper<>(userMapper).eq(User::getNickname, nickname).one();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException("昵称重复！");
+        }
+        return user;
     }
 
     /**
