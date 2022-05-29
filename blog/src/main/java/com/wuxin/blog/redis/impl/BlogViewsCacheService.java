@@ -6,6 +6,8 @@ import com.wuxin.blog.pojo.Blog;
 import com.wuxin.blog.redis.RedisService;
 import com.wuxin.blog.service.BlogService;
 import com.wuxin.blog.utils.string.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,8 @@ import java.util.*;
 
 @Component
 public class BlogViewsCacheService {
+
+    private static final Logger logger = LoggerFactory.getLogger(BlogViewsCacheService.class);
 
     @Autowired
     private RedisService redisService;
@@ -56,6 +60,7 @@ public class BlogViewsCacheService {
         getBlogList();
         if (this.blogList.size() != 0) {
             String s = String.valueOf(blogId);
+            // 如果不包含该id
             if (!this.blogList.contains(s)) {
                 this.blogList.add(s);
                 // 添加到缓存
@@ -126,6 +131,7 @@ public class BlogViewsCacheService {
                 blogService.updateBlog(blog);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                logger.error("更新失败！error:{}", e.getMessage());
             }
 
         }

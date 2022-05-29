@@ -3,6 +3,7 @@ package com.wuxin.blog.redis;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.wuxin.blog.constant.RedisKey;
+import com.wuxin.blog.constant.RedisKeyExpire;
 import com.wuxin.blog.exception.CustomException;
 import com.wuxin.blog.mapper.BlogMapper;
 import com.wuxin.blog.mapper.CategoryMapper;
@@ -53,7 +54,6 @@ public class CacheService {
     private static final String ALL_BLOG_LIST = RedisKey.ALL_BLOG_LIST;
 
 
-
     public List<Tag> getTagList() {
         // 将tagLit存入redis中
         boolean b = redisService.hasKey(TAG_LIST);
@@ -65,7 +65,7 @@ public class CacheService {
         }
         // 从数据库中获取tagList
         List<Tag> tags = MapperUtils.lambdaQueryWrapper(tagMapper).orderByDesc(Tag::getTagId).list();
-        redisService.set(TAG_LIST, tags);
+        redisService.set(TAG_LIST, tags, RedisKeyExpire.MOUTH_HALF);
         return tags;
     }
 
@@ -76,16 +76,19 @@ public class CacheService {
      * @return tag
      */
     public Tag getTagCacheById(Long tagId) {
+        if (StringUtils.isNull(tagId)) {
+            return null;
+        }
         List<Tag> tagListCache = getTagList();
         for (Tag tag : tagListCache) {
-            if (StringUtils.isNotNull(tagId) && tagIsNotNull(tag) && tagId.equals(tag.getTagId())) {
+            if (tagIsNotNull(tag) && tagId.equals(tag.getTagId())) {
                 return tag;
             }
         }
         Tag one = new LambdaQueryChainWrapper<>(tagMapper).eq(Tag::getTagId, tagId).one();
         if (tagIsNotNull(one)) {
             tagListCache.add(one);
-            redisService.set(TAG_LIST, tagListCache);
+            redisService.set(TAG_LIST, tagListCache, RedisKeyExpire.MOUTH_HALF);
         }
         return null;
 
@@ -97,16 +100,19 @@ public class CacheService {
      * @return tag
      */
     public Tag getTagCache(String tagName) {
+        if (StringUtils.isEmpty(tagName)) {
+            return null;
+        }
         List<Tag> tagListCache = getTagList();
         for (Tag tag : tagListCache) {
-            if (tagIsNotNull(tag) && StringUtils.isNotEmpty(tagName) && tag.getName().equals(tagName)) {
+            if (tagIsNotNull(tag) && tag.getName().equals(tagName)) {
                 return tag;
             }
         }
         Tag tag = new LambdaQueryChainWrapper<>(tagMapper).eq(Tag::getName, tagName).one();
         if (tagIsNotNull(tag)) {
             tagListCache.add(tag);
-            redisService.set(TAG_LIST, tagListCache);
+            redisService.set(TAG_LIST, tagListCache, RedisKeyExpire.MOUTH_HALF);
         }
         return tag;
     }
@@ -145,9 +151,12 @@ public class CacheService {
      * 根据id从缓存中获取tagName
      */
     public Category getCategoryCacheByName(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return null;
+        }
         List<Category> categoryList = getCategoryListCache();
         for (Category category : categoryList) {
-            if (categoryIsNotNull(category) && StringUtils.isNotEmpty(name) && category.getName().equals(name)) {
+            if (categoryIsNotNull(category) && category.getName().equals(name)) {
                 return category;
             }
         }
@@ -155,7 +164,7 @@ public class CacheService {
         Category category = new LambdaQueryChainWrapper<>(categoryMapper).eq(Category::getName, name).one();
         if (categoryIsNotNull(category)) {
             categoryList.add(category);
-            redisService.set(CATEGORY_LIST, categoryList);
+            redisService.set(CATEGORY_LIST, categoryList, RedisKeyExpire.MOUTH_HALF);
         }
         return category;
     }
@@ -174,7 +183,7 @@ public class CacheService {
         Category category = new LambdaQueryChainWrapper<>(categoryMapper).eq(Category::getCid, cid).one();
         if (categoryIsNotNull(category)) {
             categoryList.add(category);
-            redisService.set(CATEGORY_LIST, categoryList);
+            redisService.set(CATEGORY_LIST, categoryList, RedisKeyExpire.MOUTH_HALF);
         }
         return category;
     }
@@ -204,7 +213,7 @@ public class CacheService {
         }
         // 从数据库中获取tagList
         List<Blog> list = blogMapper.selectList(null);
-        redisService.set(ALL_BLOG_LIST, list);
+        redisService.set(ALL_BLOG_LIST, list, RedisKeyExpire.MOUTH_HALF);
         return list;
     }
 
@@ -225,15 +234,18 @@ public class CacheService {
      * @return
      */
     public Blog getBlogByBlogId(Long blogId) {
+        if (StringUtils.isNull(blogId)) {
+            return null;
+        }
         List<Blog> allBlogList = getAllBlogList();
         for (Blog blog : allBlogList) {
-            if (StringUtils.isNotNull(blogId) && StringUtils.isNotNull(blog.getBlogId()) && blog.getBlogId().equals(blog)) {
+            if (blogId.equals(blog.getBlogId())) {
                 return blog;
             }
         }
         Blog blog = blogMapper.selectById(blogId);
         allBlogList.add(blog);
-        redisService.set(ALL_BLOG_LIST, allBlogList);
+        redisService.set(ALL_BLOG_LIST, allBlogList, RedisKeyExpire.MOUTH_HALF);
         return blog;
     }
 
@@ -241,6 +253,9 @@ public class CacheService {
      * 根据用户id获取用户基本信息
      */
     public UserComment getUserCommentByUserId(Long userId) {
+        if (userId == null) {
+            return null;
+        }
         String key = RedisKey.getKey(userId, RedisKey.USER_COMMENT_SUB);
         boolean hasKey = redisService.hHasKey(RedisKey.USER_COMMENT_SUB, key);
         if (hasKey) {
@@ -325,8 +340,6 @@ public class CacheService {
         return null;
 
     }
-
-
 
 
     /*=====================================================================================*/

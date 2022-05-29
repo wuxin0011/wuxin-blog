@@ -163,8 +163,9 @@ public class AccessLogAop {
             //保存至数据库
             Visitor visitor = new Visitor(null, uuid, accessLog.getIp(), accessLog.getIpSource(), accessLog.getBrowser(), accessLog.getOs(), new Date());
             visitorService.saveOrUpdate(visitor);
-            // 保存redis  // 更新
+            // 保存redis
             visitorVoList.add(visitor);
+            // 更新
             updateVisitorList();
         }
         return uuid;
@@ -210,11 +211,17 @@ public class AccessLogAop {
     private void getVisitorList() {
         boolean hasKey = redisService.hasKey(RedisKey.VISITOR_IDENTIFICATION);
         if (hasKey) {
-            // 从redis
-            this.visitorVoList = JsonFormatUtils.objectToArr(RedisKey.VISITOR_IDENTIFICATION, Visitor.class);
-        } else {
-            this.visitorVoList = new ArrayList<>();
+            // 获取JSON数组
+            Object o = redisService.get(RedisKey.VISITOR_IDENTIFICATION);
+            List<Visitor> list = JsonFormatUtils.objectToArr(o, Visitor.class);
+            if (list.size()!=0) {
+                this.visitorVoList = list;
+                return;
+            }
+
         }
+        // 如果获取不到缓存信息，重置对象
+        this.visitorVoList = new ArrayList<>();
     }
 
     /**
@@ -224,7 +231,7 @@ public class AccessLogAop {
         boolean hasKey = redisService.hasKey(RedisKey.VISITOR_IDENTIFICATION);
         if (hasKey) {
             // 从redis
-            this.visitorVoList = JsonFormatUtils.objectToArr(RedisKey.VISITOR_IDENTIFICATION, Visitor.class);
+            this.visitorVoList = JsonFormatUtils.objectToArr(redisService.get(RedisKey.VISITOR_IDENTIFICATION), Visitor.class);
         } else {
             this.visitorVoList = new ArrayList<>();
         }
